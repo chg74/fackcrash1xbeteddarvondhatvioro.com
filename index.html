@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>1xBet</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1233;color:#fff;font-family:Tahoma,Arial,sans-serif}
+button,input{font-family:inherit}
+.hidden{display:none!important}
+.app-wrap{background:#0b1233;min-height:100vh;padding-bottom:20px}
+
+.xb-header{height:56px;background:#0d1230;border-bottom:1px solid #232a52;display:flex;align-items:center;justify-content:space-between;padding:0 12px;gap:6px}
+.xb-center{display:flex;align-items:center;gap:8px;margin:0 auto}
+.xb-balance-pill{background:#0a0e26;color:#fff;padding:8px 18px;border-radius:22px;font-size:14px;font-weight:bold;display:flex;align-items:center;justify-content:center;min-width:120px;direction:rtl;border:1px solid #232a52}
+.xb-plus{background:#2ecc71;color:#fff;width:34px;height:34px;border-radius:50%;font-size:20px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;border:0;flex-shrink:0}
+.xb-bonus-btn{background:transparent;color:#f39c12;border:1px solid #f39c12;border-radius:6px;padding:8px 12px;font-size:11px;font-weight:bold;cursor:pointer;flex-shrink:0}
+
+.xb-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px 10px;max-width:1000px;margin:0 auto}
+.xb-nav-btn{padding:12px;border-radius:6px;font-size:14px;font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;border:0}
+.xb-nav-history{background:linear-gradient(90deg,#ff4a1c,#ff8a3d);color:#fff}
+.xb-nav-terms{background:transparent;color:#ff6b35;border:1px solid #ff4a1c}
+
+.xb-arena{height:280px;margin:8px auto;width:calc(100% - 20px);max-width:1000px;background:linear-gradient(180deg,#1a2050 0%,#141a44 50%,#0f1438 100%);border-radius:6px;position:relative;overflow:hidden}
+.xb-arena::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:100% 30px;pointer-events:none}
+.xb-star{position:absolute;background:#fff;border-radius:50%;box-shadow:0 0 6px #fff;opacity:.85}
+.xb-star.small{width:4px;height:4px}
+.xb-star.big{width:7px;height:7px}
+
+.xb-cd-wrap{position:absolute;right:40px;top:50%;transform:translateY(-50%);display:none;z-index:15}
+.xb-cd-wrap.show{display:block}
+
+.xb-cd-num{font-size:96px;font-weight:900;color:#fff;font-family:Arial,sans-serif;line-height:1;text-shadow:0 0 24px rgba(255,255,255,.5);text-align:center;letter-spacing:-4px}
+
+.xb-mult{position:absolute;right:24px;bottom:20px;font-size:64px;font-weight:900;color:#fff;z-index:15;font-family:Arial,sans-serif;direction:ltr;display:none;text-shadow:0 4px 20px rgba(0,0,0,.7);line-height:1}
+
+/* ⭐ رسالة الحالة - في وسط اللعبة */
+.xb-status{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.78);border:1px solid rgba(255,255,255,.12);color:#fff;padding:14px 30px;border-radius:8px;font-size:16px;font-weight:bold;white-space:nowrap;z-index:30;display:none;text-align:center}
+.xb-status.show{display:block}
+.xb-status.accept{color:#2ecc71;border-color:rgba(46,204,113,.55);text-shadow:0 0 12px rgba(46,204,113,.5)}
+.xb-status.win{color:#2ecc71;border-color:rgba(46,204,113,.55);text-shadow:0 0 14px rgba(46,204,113,.6);animation:winPulse .5s ease-out}
+.xb-status.lose{color:#ff5a5a;border-color:rgba(255,90,90,.55);text-shadow:0 0 12px rgba(255,90,90,.5)}
+.xb-status.info{color:#fff;border-color:rgba(255,255,255,.3)}
+@keyframes winPulse{0%{transform:translate(-50%,-50%) scale(.85)}100%{transform:translate(-50%,-50%) scale(1)}}
+
+.xb-plane{position:absolute;left:-120px;bottom:40px;width:110px;height:85px;z-index:20;object-fit:contain;background:transparent;filter:drop-shadow(0 0 8px #ffb52e) drop-shadow(0 0 18px #ff8a00);display:none;transform-origin:center center;pointer-events:none}
+.xb-trail{position:absolute;left:0;top:0;width:100%;height:100%;z-index:5;pointer-events:none;overflow:visible}
+
+.xb-bet-box{background:#1e2551;border-radius:10px;padding:12px;margin:10px auto;width:calc(100% - 20px);max-width:1000px;border:1px solid #2a3266}
+.xb-bet-row-top{display:flex;gap:8px;margin-bottom:8px;align-items:stretch}
+.xb-amount-box{flex:1;background:#fff;border-radius:8px;display:flex;align-items:center;padding:0 12px;height:56px;min-width:0;order:1}
+.xb-amount-x{color:#1a2050;font-size:26px;font-weight:900;margin-left:8px;cursor:pointer;user-select:none;line-height:1}
+.xb-amount-box input{flex:1;border:0;font-size:22px;font-weight:900;color:#1a2050;text-align:right;background:transparent;outline:0;padding:0;min-width:0}
+.xb-amount-box input::placeholder{color:#8b95c9}
+
+.xb-auto-btn,.xb-place-btn{flex:0 0 42%;height:79px;border-radius:8px;padding:10px 6px;cursor:pointer;font-family:inherit;font-size:14px;font-weight:bold;line-height:1.3;text-align:center;display:flex;align-items:center;justify-content:center;flex-direction:column;order:2;box-sizing:border-box}
+.xb-auto-btn{background:transparent;color:#ff6b35;border:1.5px solid #ff4a1c}
+.xb-auto-btn::after{content:"\00a0";display:block;font-size:11px;line-height:1.3}
+
+.xb-bet-row-bottom{display:flex;gap:8px;align-items:stretch}
+.xb-quick{flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:7px;order:1}
+.xb-quick-btn{background:#2a3266;color:#fff;border-radius:8px;font-size:15px;font-weight:bold;cursor:pointer;padding:0;border:0;width:100%;height:100%;min-height:36px}
+.xb-quick-btn:active{background:#3a4488}
+
+.xb-place-btn{background:linear-gradient(180deg,#ff8a3d,#ff4a1c);color:#fff;border:0}
+.xb-place-btn small{font-size:11px;font-weight:normal;opacity:.95;display:block;margin-top:3px;line-height:1.3}
+.xb-place-btn.accepted{background:#8a5a1f;color:#fff}
+.xb-place-btn.cashout{background:#ffb52e;color:#fff;animation:pulseCash 1s infinite}
+@keyframes pulseCash{0%,100%{background:#ffb52e}50%{background:#ff9500}}
+
+.xb-stats{display:grid;grid-template-columns:repeat(3,1fr);background:linear-gradient(90deg,#ff4a1c,#ff8a3d);padding:12px 8px;margin:8px auto;width:calc(100% - 20px);max-width:1000px;border-radius:6px;text-align:center}
+.xb-stat-label{font-size:11px;color:rgba(255,255,255,.9);margin-bottom:4px}
+.xb-stat-value{font-size:17px;font-weight:900;color:#fff;direction:ltr}
+.xb-stat-unit{font-size:11px;color:rgba(255,255,255,.9);margin-top:2px}
+
+.xb-history{background:#0b1233;padding:0 10px 30px;max-width:1000px;margin:0 auto}
+.xb-history-head{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.1fr;padding:10px 4px;font-size:12px;color:#8b95c9;border-bottom:1px solid #232a52}
+.xb-history-head div{text-align:center}
+.xb-history-row{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.1fr;padding:11px 4px;font-size:13px;border-bottom:1px solid rgba(35,42,82,.4);color:#c8d0e0;transition:background .3s,color .3s}
+.xb-history-row div{text-align:center;direction:ltr}
+.xb-history-row .col-user{color:#fff}
+.xb-history-row .col-fair{color:#8b95c9}
+.xb-history-row .col-bet{color:#fff}
+.xb-history-row .col-win{color:#8b95c9}
+.xb-history-row.win .col-win{color:#2ecc71;font-weight:bold}
+.xb-history-row.win .col-fair{color:#2ecc71}
+.xb-history-row.lose .col-bet,.xb-history-row.lose .col-fair,.xb-history-row.lose .col-win{color:#ff5a5a}
+.xb-history-row.me{background:rgba(60,90,180,.18)}
+.xb-history-row.me .col-user{color:#ffb52e;font-weight:bold}
+.xb-history-row.me.lose .col-bet,.xb-history-row.me.lose .col-fair,.xb-history-row.me.lose .col-win{color:#fff}
+.xb-history-row.me.lose .col-user{color:#ffb52e}
+
+.modal-bg{display:none;position:fixed;inset:0;background:#000c;align-items:center;justify-content:center;padding:20px;z-index:200}
+.modal{width:min(430px,100%);background:#111722;border:1px solid #343d4b;border-radius:14px;padding:20px;max-height:90vh;overflow:auto}
+.modal h2{color:#ff8a00;margin-top:0}
+.close{float:left;background:none;border:0;color:#aaa;font-size:22px;cursor:pointer}
+.modal input{width:100%;padding:13px;margin-bottom:11px;background:#080c12;border:1px solid #303947;color:#fff;border-radius:8px;outline:0}
+.methods{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:12px 0}
+.method{padding:10px 3px;background:#202733;border:1px solid #394252;color:#fff;border-radius:7px;font-size:11px;cursor:pointer}
+.method.active{border-color:#ff8a00;color:#ff9b22}
+.info{background:#090d13;padding:12px;border-radius:8px;color:#9fa8b6;font-size:12px;margin-bottom:12px;line-height:1.8}
+.info b{color:#ff9b22}
+.file-box{background:#090d13;border:1px dashed #394252;border-radius:8px;padding:12px;margin-bottom:11px;font-size:12px;color:#9fa8b6}
+.file-box input{padding:0;margin:8px 0 0;border:0;background:transparent;width:auto}
+.preview{display:none;width:100%;max-height:180px;object-fit:contain;border-radius:8px;margin-top:8px;border:1px solid #343d4b}
+.loading{opacity:.6;pointer-events:none}
+
+@media(max-width:600px){
+.xb-arena{height:240px}
+.xb-mult{font-size:50px;right:16px;bottom:16px}
+.xb-cd-wrap{right:26px}
+.xb-cd-num{font-size:80px}
+.xb-plane{width:90px;height:72px}
+.xb-auto-btn,.xb-place-btn{font-size:13px;height:70px}
+.xb-place-btn small{font-size:10px}
+.xb-amount-box{height:50px}
+.xb-amount-box input{font-size:18px}
+.xb-quick-btn{font-size:14px;min-height:32px}
+.xb-stat-value{font-size:14px}
+.xb-history-row,.xb-history-head{font-size:11px}
+.xb-history-row{padding:10px 2px}
+.xb-nav-btn{font-size:12px;padding:10px}
+.xb-bonus-btn{font-size:9px;padding:6px 8px}
+.xb-status{font-size:14px;padding:12px 24px}
+}
+</style>
+</head>
+<body>
+<div id="app" class="app-wrap">
+
+<div class="xb-header">
+<div style="width:60px"></div>
+<div class="xb-center">
+<button class="xb-plus" onclick="openDeposit()">+</button>
+<div class="xb-balance-pill"><span id="balance">0.00</span> ج.م</div>
+</div>
+<button class="xb-bonus-btn">BONUS+</button>
+</div>
+
+<div class="xb-nav">
+<button class="xb-nav-btn xb-nav-history" onclick="openHistory()">🔔 السجل</button>
+<button class="xb-nav-btn xb-nav-terms" onclick="openTerms()">الأحكام و الشروط</button>
+</div>
+
+<div class="xb-arena">
+<div class="xb-star big" style="top:20%;left:75%"></div>
+<div class="xb-star small" style="top:15%;left:88%"></div>
+<div class="xb-star big" style="top:55%;left:78%"></div>
+<div class="xb-star small" style="top:70%;left:30%"></div>
+<div class="xb-star big" style="top:45%;left:50%"></div>
+<div class="xb-star small" style="top:25%;left:60%"></div>
+<div class="xb-star big" style="top:35%;left:45%"></div>
+
+<div class="xb-cd-wrap" id="cdWrap">
+<div class="xb-cd-num" id="cdNum">6</div>
+</div>
+
+<div class="xb-status" id="status"></div>
+<div class="xb-mult" id="mult">1.00x</div>
+<canvas class="xb-trail" id="trailCanvas"></canvas>
+<img class="xb-plane" id="planeWrap" src="https://raw.githubusercontent.com/turbo1-2/my-images/refs/heads/main/file_00000000e84881f4ae05c0fdf3f58f1b.png" alt="plane" crossorigin="anonymous">
+</div>
+
+<div class="xb-bet-box">
+<div class="xb-bet-row-top">
+<button class="xb-auto-btn">تمكين التشغيل التلقائي</button>
+<div class="xb-amount-box">
+<div class="xb-amount-x" onclick="clearBet(1)">×</div>
+<input type="number" id="betInput1" value="20" min="1">
+</div>
+</div>
+<div class="xb-bet-row-bottom">
+<button class="xb-place-btn" id="placeBtn1" onclick="placeBet(1)">وضع الرهان<small>(على الجولة التالية)</small></button>
+<div class="xb-quick">
+<button class="xb-quick-btn" onclick="setBet(1,10)">10</button>
+<button class="xb-quick-btn" onclick="setBet(1,50)">50</button>
+<button class="xb-quick-btn" onclick="setBet(1,100)">100</button>
+<button class="xb-quick-btn" onclick="setBet(1,400)">400</button>
+<button class="xb-quick-btn" onclick="setBet(1,1000)">1000</button>
+<button class="xb-quick-btn" onclick="setBet(1,5000)">5000</button>
+</div>
+</div>
+</div>
+
+<div class="xb-bet-box">
+<div class="xb-bet-row-top">
+<button class="xb-auto-btn">تمكين التشغيل التلقائي</button>
+<div class="xb-amount-box">
+<div class="xb-amount-x" onclick="clearBet(2)">×</div>
+<input type="number" id="betInput2" value="20" min="1">
+</div>
+</div>
+<div class="xb-bet-row-bottom">
+<button class="xb-place-btn" id="placeBtn2" onclick="placeBet(2)">وضع الرهان<small>(على الجولة التالية)</small></button>
+<div class="xb-quick">
+<button class="xb-quick-btn" onclick="setBet(2,10)">10</button>
+<button class="xb-quick-btn" onclick="setBet(2,50)">50</button>
+<button class="xb-quick-btn" onclick="setBet(2,100)">100</button>
+<button class="xb-quick-btn" onclick="setBet(2,400)">400</button>
+<button class="xb-quick-btn" onclick="setBet(2,1000)">1000</button>
+<button class="xb-quick-btn" onclick="setBet(2,5000)">5000</button>
+</div>
+</div>
+</div>
+
+<div class="xb-stats">
+<div class="xb-stat-item">
+<div class="xb-stat-label">عدد الرهانات</div>
+<div class="xb-stat-value" id="statCount">23</div>
+<div class="xb-stat-unit">👤 EGP</div>
+</div>
+<div class="xb-stat-item">
+<div class="xb-stat-label">مجموع الرهانات</div>
+<div class="xb-stat-value" id="statTotal">560.71</div>
+<div class="xb-stat-unit">EGP</div>
+</div>
+<div class="xb-stat-item">
+<div class="xb-stat-label">مجموع الربح</div>
+<div class="xb-stat-value" id="statProfit">0</div>
+<div class="xb-stat-unit">EGP</div>
+</div>
+</div>
+
+<div class="xb-history">
+<div class="xb-history-head">
+<div>اسم المستخدم</div>
+<div>الفرص</div>
+<div>الرهان</div>
+<div>الأرباح</div>
+</div>
+<div id="historyBody"></div>
+</div>
+
+</div>
+
+<div id="depositModal" class="modal-bg">
+<div class="modal">
+<button class="close" onclick="closeModal('depositModal')">×</button>
+<h2>إيداع اموال</h2>
+<div class="info">قم بتحويل الأموال في غضون 10 دقيقة قبل إنشاء طلب باستخدام تفاصيل الدفع المقدمة أدناه.<br>الرجاء التحويل على هذا الرقم من محفظة<br><b id="depositNumber">جاري التحميل...</b></div>
+<div class="methods">
+<button class="method" onclick="chooseMethod(this)">Orange Cash</button>
+<button class="method" onclick="chooseMethod(this)">Vodafone Cash</button>
+<button class="method" onclick="chooseMethod(this)">Etisalat Cash</button>
+</div>
+<input id="depositAmount" type="number" min="1" placeholder="المبلغ (الحد الأدنى 150 EGP)">
+<input id="fromNumber" type="tel" inputmode="numeric" maxlength="11" placeholder="رقم هاتفك الذي تم منه التحويل">
+<div class="file-box">
+من فضلك قم بتحميل لقطة شاشة للرسالة النصية :
+<input id="depositImage" type="file" accept="image/*" onchange="previewDepositImage(event)">
+<img id="depositPreview" class="preview">
+</div>
+<button id="depositBtn" class="main" style="background:#ff8a00;color:#111;font-weight:bold;padding:13px;border:0;border-radius:8px;width:100%;cursor:pointer" onclick="sendDeposit()">إرسال طلب الإيداع</button>
+</div>
+</div>
+
+<div id="withdrawModal" class="modal-bg">
+<div class="modal">
+<button class="close" onclick="closeModal('withdrawModal')">×</button>
+<h2>سحب اموال</h2>
+<div class="info">الرصيد: <b><span id="withdrawBalance">0.00</span> ج</b><br><br>الحد الأدنى للسحب: <b>200 ج</b></div>
+<input id="withdrawAmount" type="number" min="200" placeholder="المبلغ">
+<input id="withdrawNumber" type="tel" inputmode="numeric" maxlength="11" placeholder="رقم الهاتف">
+<button id="withdrawBtn" class="main" style="background:#ff8a00;color:#111;font-weight:bold;padding:13px;border:0;border-radius:8px;width:100%;cursor:pointer" onclick="sendWithdraw()">إرسال طلب السحب</button>
+</div>
+</div>
+
+<div id="historyModal" class="modal-bg">
+<div class="modal">
+<button class="close" onclick="closeModal('historyModal')">×</button>
+<h2>📋 السجل</h2>
+<div class="info">هنا يظهر سجل كل الجولات السابقة (رهاناتك).</div>
+<div id="historyModalContent" style="color:#c8d0e0;font-size:13px;line-height:1.8">لا يوجد سجل حالياً</div>
+</div>
+</div>
+
+<div id="termsModal" class="modal-bg">
+<div class="modal">
+<button class="close" onclick="closeModal('termsModal')">×</button>
+<h2>📜 الأحكام والشروط</h2>
+<div class="info" style="line-height:2">
+<b>1-</b> الحد الأدنى للإيداع 150 ج.م<br>
+<b>2-</b> الحد الأدنى للسحب 200 ج.م<br>
+<b>3-</b> اللعبة تعمل بنظام الجولات السريعة<br>
+<b>4-</b> يجب التحويل من نفس رقم الحساب<br>
+<b>5-</b> في حالة إلغاء الجولة يتم إرجاع الرهان<br>
+<b>6-</b> اللعبة غير مسؤولة عن أي مشاكل تقنية<br>
+<b>7-</b> باستخدامك للعبة فأنت توافق على جميع الشروط
+</div>
+</div>
+</div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import {getDatabase, ref, set, update, push, onValue} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyAUc2C9hG9VE7RECiW19QXjNZqVH96sFE",
+authDomain:"zezo-59a8d.firebaseapp.com",
+databaseURL:"https://zezo-59a8d-default-rtdb.firebaseio.com",
+projectId:"zezo-59a8d",
+storageBucket:"zezo-59a8d.firebasestorage.app",
+messagingSenderId:"49183098248",
+appId:"1:49183098248:web:37e3fb16744042a1bb263d",
+measurementId:"G-Q6TLZ6GJTV"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getDatabase(app);
+
+let user="1725389615";
+let balance=1000;
+let roundState="countdown";
+let roundTimer=null;
+let countdownTimer=null;
+let multiplier=1;
+let crashPoint=0;
+let depositNumberValue="";
+let bet1={amount:0,active:false};
+let bet2={amount:0,active:false};
+let statCount=23;
+let statTotal=560.71;
+let statProfit=0;
+let userHistory=[];
+
+const botIds=["178******","184******","347******","912******","556******","721******","433******","891******","665******","234******","019******","775******","502******","913******","678******","428******","045******","882******","539******","297******","814******","603******","371******","925******","742******","159******","487******","630******","206******","853******"];
+let botPlayers=[];
+
+let statusTimeout=null;
+function showStatusMsg(text, cls, duration){
+const el=document.getElementById("status");
+if(!el) return;
+clearTimeout(statusTimeout);
+el.textContent=text;
+el.className="xb-status show "+(cls||"");
+statusTimeout=setTimeout(()=>{
+el.className="xb-status";
+},duration||2200);
+}
+
+function hideStatusMsg(){
+const el=document.getElementById("status");
+if(el) el.className="xb-status";
+clearTimeout(statusTimeout);
+}
+
+function updateScreenBalance(){
+const b=document.getElementById("balance");
+const wb=document.getElementById("withdrawBalance");
+const formatted=Number(balance||0).toFixed(2);
+if(b) b.textContent=formatted;
+if(wb) wb.textContent=formatted;
+}
+
+onValue(ref(db,"settings/depositNumber"),snap=>{
+depositNumberValue=snap.exists()?String(snap.val()||""):"لم يتم تحديد الرقم";
+const el=document.getElementById("depositNumber");
+if(el) el.textContent=depositNumberValue||"غير محدد";
+});
+
+function previewDepositImage(event){
+const file=event.target.files?.[0];
+const preview=document.getElementById("depositPreview");
+if(!file){preview.style.display="none";preview.removeAttribute("src");return;}
+if(!file.type.startsWith("image/")){showStatusMsg("اختار صورة فقط","info");event.target.value="";preview.style.display="none";return;}
+if(file.size>2*1024*1024){showStatusMsg("حجم الصورة كبير","info");event.target.value="";preview.style.display="none";return;}
+const reader=new FileReader();
+reader.onload=()=>{preview.src=reader.result;preview.style.display="block";};
+reader.readAsDataURL(file);
+}
+
+function fileToBase64(file){
+return new Promise((resolve,reject)=>{
+const reader=new FileReader();
+reader.onload=()=>resolve(reader.result);
+reader.onerror=reject;
+reader.readAsDataURL(file);
+});
+}
+
+async function sendDeposit(){
+const amount=Number(document.getElementById("depositAmount").value);
+const from=document.getElementById("fromNumber").value.replace(/\D/g,"");
+const active=document.querySelector(".method.active");
+const file=document.getElementById("depositImage").files?.[0];
+if(!amount||amount<=0){showStatusMsg("اكتب مبلغ صحيح","info");return;}
+if(!active){showStatusMsg("اختار طريقة الإيداع","info");return;}
+if(!/^\d{11}$/.test(from)){showStatusMsg("رقم التحويل 11 رقم","info");return;}
+const btn=document.getElementById("depositBtn");
+btn.disabled=true;btn.classList.add("loading");
+try{
+let imageData="";
+if(file) imageData=await fileToBase64(file);
+await push(ref(db,"requests"),{type:"deposit",user:user,amount:amount,method:active.textContent.trim(),depositNumber:depositNumberValue,fromNumber:from,image:imageData,status:"pending",date:new Date().toLocaleString("ar-EG"),createdAt:Date.now()});
+document.getElementById("depositAmount").value="";
+document.getElementById("fromNumber").value="";
+document.getElementById("depositImage").value="";
+document.getElementById("depositPreview").style.display="none";
+document.querySelectorAll(".method").forEach(x=>x.classList.remove("active"));
+closeModal("depositModal");
+}catch(error){console.error(error);}
+btn.disabled=false;btn.classList.remove("loading");
+}
+
+async function sendWithdraw(){
+const amount=Number(document.getElementById("withdrawAmount").value);
+const number=document.getElementById("withdrawNumber").value.replace(/\D/g,"");
+if(!amount||amount<200){showStatusMsg("أقل سحب 200 ج","info");return;}
+if(amount>balance){showStatusMsg("الرصيد غير كافي","info");return;}
+if(!/^\d{11}$/.test(number)){showStatusMsg("رقم الاستلام 11 رقم","info");return;}
+const btn=document.getElementById("withdrawBtn");
+btn.disabled=true;btn.classList.add("loading");
+try{
+await push(ref(db,"requests"),{type:"withdraw",user:user,amount:amount,method:"",withdrawNumber:number,status:"pending",date:new Date().toLocaleString("ar-EG"),createdAt:Date.now()});
+document.getElementById("withdrawAmount").value="";
+document.getElementById("withdrawNumber").value="";
+closeModal("withdrawModal");
+}catch(error){console.error(error);}
+btn.disabled=false;btn.classList.remove("loading");
+}
+
+function openDeposit(){document.getElementById("depositModal").style.display="flex";}
+function openWithdraw(){document.getElementById("withdrawBalance").textContent=Number(balance||0).toFixed(2);document.getElementById("withdrawModal").style.display="flex";}
+function openHistory(){
+const content=document.getElementById("historyModalContent");
+if(userHistory.length===0){content.innerHTML="لا يوجد سجل حالياً";}
+else{content.innerHTML=userHistory.map(h=>`<div style="padding:8px;border-bottom:1px solid #2a3266;color:${h.isWin?'#2ecc71':'#ff5a5a'}">جولة: ${h.multiplier}x | رهان: ${h.bet} ج | ${h.isWin?'ربح: '+h.win.toFixed(2)+' ج':'خسارة'}</div>`).join("");}
+document.getElementById("historyModal").style.display="flex";
+}
+function openTerms(){document.getElementById("termsModal").style.display="flex";}
+function closeModal(id){document.getElementById(id).style.display="none";}
+function chooseMethod(btn){document.querySelectorAll(".method").forEach(x=>x.classList.remove("active"));btn.classList.add("active");}
+
+function shuffleArray(array){const arr=[...array];for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+function setBet(n,val){document.getElementById("betInput"+n).value=val;}
+function clearBet(n){document.getElementById("betInput"+n).value="";}
+function formatNum(n){return n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});}
+function rand(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+
+function createHistoryRows(players){
+const body=document.getElementById("historyBody");
+body.innerHTML="";
+players.forEach(p=>{
+const row=document.createElement("div");
+row.className="xb-history-row";
+row.dataset.pid=p.id;
+row.innerHTML="<div class='col-user'>"+p.name+"</div><div class='col-fair'>x0</div><div class='col-bet'>EGP "+formatNum(p.bet)+"</div><div class='col-win'>EGP 0.00</div>";
+body.appendChild(row);
+});
+}
+
+function updateHistoryRow(pid, isWin, fair, winAmt){
+const row=document.querySelector('.xb-history-row[data-pid="'+pid+'"]');
+if(!row) return;
+row.classList.remove("win","lose");
+if(isWin){
+row.classList.add("win");
+row.querySelector(".col-fair").textContent="x"+fair.toFixed(2);
+row.querySelector(".col-win").textContent="EGP "+formatNum(winAmt);
+}else{
+row.classList.add("lose");
+row.querySelector(".col-fair").textContent="x0";
+row.querySelector(".col-win").textContent="EGP 0.00";
+}
+}
+
+function addUserHistoryRow(isWin, fair, betAmt, winAmt){
+const body=document.getElementById("historyBody");
+const existing=document.querySelector('.xb-history-row.me');
+if(existing) existing.remove();
+const row=document.createElement("div");
+row.className="xb-history-row me "+(isWin?"win":"lose");
+row.innerHTML="<div class='col-user'>"+user+"</div><div class='col-fair'>"+(isWin?"x"+fair.toFixed(2):"x0")+"</div><div class='col-bet'>EGP "+formatNum(betAmt)+"</div><div class='col-win'>EGP "+formatNum(winAmt)+"</div>";
+body.insertBefore(row, body.firstChild);
+}
+
+function updateStats(newBets, newTotal, newProfit){
+statCount+=newBets;statTotal+=newTotal;statProfit+=newProfit;
+document.getElementById("statCount").textContent=statCount;
+document.getElementById("statTotal").textContent=formatNum(statTotal);
+document.getElementById("statProfit").textContent=formatNum(statProfit);
+}
+
+function createPlayers(){
+botPlayers=[];
+const playersCount=15+Math.floor(Math.random()*11);
+const selectedIds=shuffleArray(botIds).slice(0, Math.min(playersCount, botIds.length));
+selectedIds.forEach((name, idx)=>{
+let cashout;const r=Math.random();
+if(r<.30){cashout=Number((1.15+Math.random()*.45).toFixed(2));}
+else if(r<.60){cashout=Number((1.8+Math.random()*1.2).toFixed(2));}
+else if(r<.85){cashout=Number((3.2+Math.random()*2.5).toFixed(2));}
+else{cashout=Number((6+Math.random()*8).toFixed(2));}
+const betAmount=[10,20,50,100,150,200,300,500,800,1000][rand(0,9)];
+botPlayers.push({id:"p"+Date.now()+"_"+idx,name:name,cashout:cashout,bet:betAmount,state:"waiting"});
+});
+createHistoryRows(botPlayers);
+}
+
+function generateCrashPoint(){
+const presets=[1.06,1.15,1.25,1.48,1.72,2.05,2.35,2.80,3.20,3.75,4.50,5.00,5.80,6.50,7.20,8.00,9.50,11.00,12.00,13.50];
+let point=presets[Math.floor(Math.random()*presets.length)];
+if(Math.random()<0.30){point+=Number((Math.random()*.5).toFixed(2));}
+if(Math.random()<0.10){point=Number((10+Math.random()*8).toFixed(2));}
+return Number(point.toFixed(2));
+}
+
+async function prepareRound(){
+const newRoundId=String(Date.now());
+const newCrashPoint=generateCrashPoint();
+crashPoint=newCrashPoint;
+try{
+await set(ref(db,"demoRounds/current"),{roundId:newRoundId,crashPoint:newCrashPoint,prediction:newCrashPoint,result:null,status:"waiting",createdAt:Date.now()});
+}catch(e){console.error("FB:",e);}
+document.getElementById("mult").textContent="1.00x";
+}
+
+const trailCanvas=document.getElementById("trailCanvas");
+const trailCtx=trailCanvas.getContext("2d");
+let trailPoints=[];
+
+function resizeTrailCanvas(){
+const arena=document.querySelector(".xb-arena");
+trailCanvas.width=arena.clientWidth;
+trailCanvas.height=arena.clientHeight;
+}
+window.addEventListener("resize",resizeTrailCanvas);
+
+function clearTrail(){trailPoints=[];if(trailCtx){trailCtx.clearRect(0,0,trailCanvas.width,trailCanvas.height);}}
+
+async function startCountdown(){
+clearInterval(roundTimer);
+clearInterval(countdownTimer);
+roundState="countdown";
+multiplier=1;
+bet1={amount:0,active:false};
+bet2={amount:0,active:false};
+
+hideStatusMsg();
+document.getElementById("planeWrap").style.display="none";
+document.getElementById("planeWrap").style.left="-120px";
+document.getElementById("mult").style.display="none";
+document.getElementById("cdWrap").classList.add("show");
+
+clearTrail();
+resizeTrailCanvas();
+
+const b1=document.getElementById("placeBtn1");
+b1.classList.remove("accepted","cashout");
+b1.innerHTML="وضع الرهان<small>(على الجولة التالية)</small>";
+const b2=document.getElementById("placeBtn2");
+b2.classList.remove("accepted","cashout");
+b2.innerHTML="وضع الرهان<small>(على الجولة التالية)</small>";
+
+createPlayers();
+try{await prepareRound();}catch(e){console.error(e);}
+
+let seconds=6;
+document.getElementById("cdNum").textContent=seconds;
+
+countdownTimer=setInterval(()=>{
+seconds--;
+if(seconds>=1){
+document.getElementById("cdNum").textContent=seconds;
+}else{
+clearInterval(countdownTimer);
+startRound();
+}
+},1000);
+}
+
+async function startRound(){
+clearInterval(roundTimer);
+roundState="running";
+multiplier=1;
+
+document.getElementById("planeWrap").style.display="block";
+document.getElementById("mult").style.display="block";
+document.getElementById("mult").textContent="1.00x";
+document.getElementById("cdWrap").classList.remove("show");
+
+clearTrail();
+resizeTrailCanvas();
+
+botPlayers.forEach(p=>p.state="playing");
+
+if(bet1.active){const b1=document.getElementById("placeBtn1");b1.classList.remove("accepted");b1.classList.add("cashout");b1.innerHTML="جمع";}
+if(bet2.active){const b2=document.getElementById("placeBtn2");b2.classList.remove("accepted");b2.classList.add("cashout");b2.innerHTML="جمع";}
+
+try{await update(ref(db,"demoRounds/current"),{status:"running",startedAt:Date.now()});}catch(e){console.error(e);}
+
+const arena=document.querySelector(".xb-arena");
+const W=arena.clientWidth;
+const H=arena.clientHeight;
+
+const startX=20;
+const startY=15;
+const endX=W-150;
+const endY=H-90;
+
+const SPEED_X = (endX - startX) / 16;
+const SPEED_Y = (endY - startY) / 16;
+const SPEED_MULT = 0.35;
+
+const START_TIME = Date.now();
+
+roundTimer=setInterval(()=>{
+const elapsed = (Date.now() - START_TIME) / 1000;
+
+let x = startX + SPEED_X * elapsed;
+let y = startY + SPEED_Y * elapsed;
+
+if(x > endX) x = endX;
+if(y > endY) y = endY;
+
+const plane = document.getElementById("planeWrap");
+plane.style.left = x + "px";
+plane.style.bottom = y + "px";
+
+const angle = -10 + (Math.min(1, elapsed / 16) * 30);
+plane.style.transform = "rotate(" + angle + "deg)";
+
+trailPoints.push({x: x + 18, y: y + 30});
+if(trailPoints.length > 800) trailPoints.shift();
+
+trailCtx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
+
+if(trailPoints.length > 1){
+trailCtx.beginPath();
+trailCtx.moveTo(trailPoints[0].x, H - trailPoints[0].y);
+for(let i=1; i<trailPoints.length; i++){
+trailCtx.lineTo(trailPoints[i].x, H - trailPoints[i].y);
+}
+trailCtx.lineWidth = 16;
+trailCtx.strokeStyle = "rgba(255, 140, 0, 0.18)";
+trailCtx.lineCap = "round";
+trailCtx.lineJoin = "round";
+trailCtx.stroke();
+
+trailCtx.beginPath();
+trailCtx.moveTo(trailPoints[0].x, H - trailPoints[0].y);
+for(let i=1; i<trailPoints.length; i++){
+trailCtx.lineTo(trailPoints[i].x, H - trailPoints[i].y);
+}
+trailCtx.lineWidth = 4;
+trailCtx.strokeStyle = "rgba(255, 220, 30, 1)";
+trailCtx.shadowColor = "#ff8a00";
+trailCtx.shadowBlur = 14;
+trailCtx.stroke();
+trailCtx.shadowBlur = 0;
+}
+
+multiplier = 1 + SPEED_MULT * elapsed;
+
+if(multiplier >= crashPoint){
+multiplier = crashPoint;
+document.getElementById("mult").textContent = multiplier.toFixed(2) + "x";
+crash();
+return;
+}
+
+document.getElementById("mult").textContent = multiplier.toFixed(2) + "x";
+
+botPlayers.forEach(player=>{
+if(player.state==="playing" && multiplier>=player.cashout){
+player.state="cashed";
+const winAmt=player.bet*player.cashout;
+updateHistoryRow(player.id, true, player.cashout, winAmt);
+}
+});
+},50);
+}
+
+function placeBet(n){
+const betObj=(n===1)?bet1:bet2;
+const btn=document.getElementById("placeBtn"+n);
+
+if(roundState==="running"){
+if(betObj.active && multiplier>1){
+cashOutBet(n);
+return;
+}
+showStatusMsg("أنت داخل الجولة بالفعل","info");
+return;
+}
+
+if(roundState!=="countdown"){
+showStatusMsg("أنت داخل الجولة بالفعل","info");
+return;
+}
+
+if(betObj.active){
+showStatusMsg("أنت داخل الجولة بالفعل","info");
+return;
+}
+
+const amount=Number(document.getElementById("betInput"+n).value)||0;
+if(amount<1){showStatusMsg("أقل رهان 1 ج.م","info");return;}
+if(amount>balance){showStatusMsg("الرصيد غير كافي","info");return;}
+
+betObj.amount=amount;
+betObj.active=true;
+balance-=amount;
+updateScreenBalance();
+btn.classList.add("accepted");
+btn.innerHTML="تم قبول الرهان";
+
+showStatusMsg("تم قبول الرهان!", "accept", 2000);
+addUserHistoryRow(false, 0, amount, 0);
+}
+
+function cashOutBet(n){
+const betObj=(n===1)?bet1:bet2;
+const btn=document.getElementById("placeBtn"+n);
+if(!betObj.active)return;
+
+const winAmt=betObj.amount*multiplier;
+balance+=winAmt;
+updateScreenBalance();
+
+betObj.active=false;
+btn.classList.remove("cashout","accepted");
+btn.innerHTML="وضع الرهان<small>(على الجولة التالية)</small>";
+
+showStatusMsg("لقد فزت: "+winAmt.toFixed(0)+" EGP", "win", 3000);
+
+updateStats(1, betObj.amount, winAmt);
+userHistory.unshift({multiplier:multiplier,bet:betObj.amount,win:winAmt,isWin:true,ts:Date.now()});
+
+const meRow=document.querySelector('.xb-history-row.me');
+if(meRow){
+meRow.classList.remove("lose");
+meRow.classList.add("win");
+meRow.querySelector(".col-fair").textContent="x"+multiplier.toFixed(2);
+meRow.querySelector(".col-win").textContent="EGP "+formatNum(winAmt);
+}
+betObj.amount=0;
+}
+
+async function crash(){
+clearInterval(roundTimer);
+roundState="crashed";
+multiplier=crashPoint;
+document.getElementById("mult").textContent=crashPoint.toFixed(2)+"x";
+document.getElementById("planeWrap").style.display="none";
+
+let userLost=0;
+if(bet1.active){userLost+=bet1.amount;bet1.active=false;}
+if(bet2.active){userLost+=bet2.amount;bet2.active=false;}
+
+/* ⭐ رسالة الخسارة - فوق في وسط اللعبة */
+if(userLost>0){
+showStatusMsg("سيحالفك الحظ في المرة القادمة", "lose", 2500);
+userHistory.unshift({multiplier:crashPoint,bet:userLost,win:0,isWin:false,ts:Date.now()});
+const meRow=document.querySelector('.xb-history-row.me');
+if(meRow){
+meRow.querySelector(".col-fair").textContent="x0";
+meRow.querySelector(".col-win").textContent="EGP 0.00";
+}
+}
+
+botPlayers.forEach(player=>{
+if(player.state==="playing"){
+player.state="lost";
+updateHistoryRow(player.id, false, 0, 0);
+}
+});
+
+try{
+await update(ref(db,"demoRounds/current"),{status:"crashed",result:crashPoint,crashedAt:Date.now()});
+}catch(e){console.error(e);}
+
+const b1=document.getElementById("placeBtn1");
+b1.classList.remove("cashout","accepted");
+b1.innerHTML="وضع الرهان<small>(على الجولة التالية)</small>";
+const b2=document.getElementById("placeBtn2");
+b2.classList.remove("cashout","accepted");
+b2.innerHTML="وضع الرهان<small>(على الجولة التالية)</small>";
+
+setTimeout(startCountdown, 1200);
+}
+
+window.openDeposit=openDeposit;
+window.openWithdraw=openWithdraw;
+window.openHistory=openHistory;
+window.openTerms=openTerms;
+window.closeModal=closeModal;
+window.chooseMethod=chooseMethod;
+window.sendDeposit=sendDeposit;
+window.sendWithdraw=sendWithdraw;
+window.previewDepositImage=previewDepositImage;
+window.placeBet=placeBet;
+window.setBet=setBet;
+window.clearBet=clearBet;
+
+updateScreenBalance();
+resizeTrailCanvas();
+startCountdown();
+</script>
+
+<script>
+(function(){
+"use strict";
+document.addEventListener("contextmenu",function(e){e.preventDefault();e.stopPropagation();return false;},true);
+document.addEventListener("selectstart",function(e){e.preventDefault();return false;},true);
+document.addEventListener("copy",function(e){e.preventDefault();return false;},true);
+document.addEventListener("cut",function(e){e.preventDefault();return false;},true);
+document.addEventListener("dragstart",function(e){e.preventDefault();return false;},true);
+document.addEventListener("keydown",function(e){
+const key=String(e.key||"").toLowerCase();
+if(e.key==="F12"){e.preventDefault();e.stopPropagation();return false;}
+if(e.ctrlKey && key==="u"){e.preventDefault();e.stopPropagation();return false;}
+if(e.ctrlKey && e.shiftKey && key==="i"){e.preventDefault();e.stopPropagation();return false;}
+if(e.ctrlKey && e.shiftKey && key==="j"){e.preventDefault();e.stopPropagation();return false;}
+if(e.ctrlKey && e.shiftKey && key==="c"){e.preventDefault();e.stopPropagation();return false;}
+if(e.ctrlKey && key==="s"){e.preventDefault();e.stopPropagation();return false;}
+if(e.ctrlKey && key==="p"){e.preventDefault();e.stopPropagation();return false;}
+},true);
+document.addEventListener("drop",function(e){e.preventDefault();return false;},true);
+document.addEventListener("dragover",function(e){e.preventDefault();return false;},true);
+})();
+</script>
+</body>
+</html>
