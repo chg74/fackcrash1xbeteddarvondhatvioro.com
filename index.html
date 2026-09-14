@@ -35,7 +35,6 @@ button,input{font-family:inherit}
 
 .xb-mult{position:absolute;right:24px;bottom:20px;font-size:64px;font-weight:900;color:#fff;z-index:15;font-family:Arial,sans-serif;direction:ltr;display:none;text-shadow:0 4px 20px rgba(0,0,0,.7);line-height:1}
 
-/* ⭐ رسالة الحالة - في وسط اللعبة */
 .xb-status{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.78);border:1px solid rgba(255,255,255,.12);color:#fff;padding:14px 30px;border-radius:8px;font-size:16px;font-weight:bold;white-space:nowrap;z-index:30;display:none;text-align:center}
 .xb-status.show{display:block}
 .xb-status.accept{color:#2ecc71;border-color:rgba(46,204,113,.55);text-shadow:0 0 12px rgba(46,204,113,.5)}
@@ -83,13 +82,23 @@ button,input{font-family:inherit}
 .xb-history-row .col-fair{color:#8b95c9}
 .xb-history-row .col-bet{color:#fff}
 .xb-history-row .col-win{color:#8b95c9}
+
+/* اللي بيكسب: كله أخضر */
+.xb-history-row.win .col-user,
+.xb-history-row.win .col-fair,
+.xb-history-row.win .col-bet,
 .xb-history-row.win .col-win{color:#2ecc71;font-weight:bold}
-.xb-history-row.win .col-fair{color:#2ecc71}
-.xb-history-row.lose .col-bet,.xb-history-row.lose .col-fair,.xb-history-row.lose .col-win{color:#ff5a5a}
+
+/* اللي بيخسر: كله أحمر */
+.xb-history-row.lose .col-user,
+.xb-history-row.lose .col-fair,
+.xb-history-row.lose .col-bet,
+.xb-history-row.lose .col-win{color:#ff5a5a;font-weight:bold}
+
 .xb-history-row.me{background:rgba(60,90,180,.18)}
-.xb-history-row.me .col-user{color:#ffb52e;font-weight:bold}
+.xb-history-row.me.win .col-user{color:#2ecc71;font-weight:bold}
+.xb-history-row.me.lose .col-user{color:#fff}
 .xb-history-row.me.lose .col-bet,.xb-history-row.me.lose .col-fair,.xb-history-row.me.lose .col-win{color:#fff}
-.xb-history-row.me.lose .col-user{color:#ffb52e}
 
 .modal-bg{display:none;position:fixed;inset:0;background:#000c;align-items:center;justify-content:center;padding:20px;z-index:200}
 .modal{width:min(430px,100%);background:#111722;border:1px solid #343d4b;border-radius:14px;padding:20px;max-height:90vh;overflow:auto}
@@ -749,7 +758,6 @@ let userLost=0;
 if(bet1.active){userLost+=bet1.amount;bet1.active=false;}
 if(bet2.active){userLost+=bet2.amount;bet2.active=false;}
 
-/* ⭐ رسالة الخسارة - فوق في وسط اللعبة */
 if(userLost>0){
 showStatusMsg("سيحالفك الحظ في المرة القادمة", "lose", 2500);
 userHistory.unshift({multiplier:crashPoint,bet:userLost,win:0,isWin:false,ts:Date.now()});
@@ -822,4 +830,4 @@ document.addEventListener("dragover",function(e){e.preventDefault();return false
 })();
 </script>
 </body>
-</html>
+  </html>
