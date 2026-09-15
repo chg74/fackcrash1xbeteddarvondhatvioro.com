@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>1xBet</title>
+<title>EXBET</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#0b1233;color:#fff;font-family:Tahoma,Arial,sans-serif}
@@ -30,18 +30,17 @@ button,input{font-family:inherit}
 
 .xb-cd-wrap{position:absolute;right:40px;top:50%;transform:translateY(-50%);display:none;z-index:15}
 .xb-cd-wrap.show{display:block}
-
-.xb-cd-num{font-size:96px;font-weight:900;color:#fff;font-family:Arial,sans-serif;line-height:1;text-shadow:0 0 24px rgba(255,255,255,.5);text-align:center;letter-spacing:-4px}
+.xb-cd-num{font-size:72px;font-weight:900;color:#fff;font-family:Arial,sans-serif;line-height:1;text-shadow:0 0 20px rgba(255,255,255,.5);text-align:center;letter-spacing:-3px}
 
 .xb-mult{position:absolute;right:24px;bottom:20px;font-size:64px;font-weight:900;color:#fff;z-index:15;font-family:Arial,sans-serif;direction:ltr;display:none;text-shadow:0 4px 20px rgba(0,0,0,.7);line-height:1}
 
-.xb-status{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.78);border:1px solid rgba(255,255,255,.12);color:#fff;padding:14px 30px;border-radius:8px;font-size:16px;font-weight:bold;white-space:nowrap;z-index:30;display:none;text-align:center}
+.xb-status{position:absolute;left:30%;top:50%;transform:translate(-50%,-50%);background:rgba(10,15,40,.55);border:1px solid rgba(46,204,113,.25);color:#fff;padding:12px 44px;border-radius:6px;font-size:16px;font-weight:bold;white-space:nowrap;z-index:30;display:none;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.4);backdrop-filter:blur(3px);letter-spacing:1.5px;min-width:380px}
 .xb-status.show{display:block}
-.xb-status.accept{color:#2ecc71;border-color:rgba(46,204,113,.55);text-shadow:0 0 12px rgba(46,204,113,.5)}
-.xb-status.win{color:#2ecc71;border-color:rgba(46,204,113,.55);text-shadow:0 0 14px rgba(46,204,113,.6);animation:winPulse .5s ease-out}
-.xb-status.lose{color:#ff5a5a;border-color:rgba(255,90,90,.55);text-shadow:0 0 12px rgba(255,90,90,.5)}
-.xb-status.info{color:#fff;border-color:rgba(255,255,255,.3)}
-@keyframes winPulse{0%{transform:translate(-50%,-50%) scale(.85)}100%{transform:translate(-50%,-50%) scale(1)}}
+.xb-status.accept{color:#8fe36b;border-color:rgba(46,204,113,.3);text-shadow:0 0 12px rgba(46,204,113,.55)}
+.xb-status.win{color:#8fe36b;border-color:rgba(46,204,113,.3);text-shadow:0 0 14px rgba(46,204,113,.6);animation:winPulse .5s ease-out}
+.xb-status.lose{color:#ff7a3d;border-color:rgba(255,90,90,.3);text-shadow:0 0 12px rgba(255,90,90,.55)}
+.xb-status.info{color:#fff;border-color:rgba(255,255,255,.2)}
+@keyframes winPulse{0%{transform:translate(-50%,-50%) scale(.9)}100%{transform:translate(-50%,-50%) scale(1)}}
 
 .xb-plane{position:absolute;left:-120px;bottom:40px;width:110px;height:85px;z-index:20;object-fit:contain;background:transparent;filter:drop-shadow(0 0 8px #ffb52e) drop-shadow(0 0 18px #ff8a00);display:none;transform-origin:center center;pointer-events:none}
 .xb-trail{position:absolute;left:0;top:0;width:100%;height:100%;z-index:5;pointer-events:none;overflow:visible}
@@ -53,7 +52,7 @@ button,input{font-family:inherit}
 .xb-amount-box input{flex:1;border:0;font-size:22px;font-weight:900;color:#1a2050;text-align:right;background:transparent;outline:0;padding:0;min-width:0}
 .xb-amount-box input::placeholder{color:#8b95c9}
 
-.xb-auto-btn,.xb-place-btn{flex:0 0 42%;height:79px;border-radius:8px;padding:10px 6px;cursor:pointer;font-family:inherit;font-size:14px;font-weight:bold;line-height:1.3;text-align:center;display:flex;align-items:center;justify-content:center;flex-direction:column;order:2;box-sizing:border-box}
+.xb-auto-btn,.xb-place-btn{flex:0 0 42%;height:79px;border-radius:12px;padding:10px 6px;cursor:pointer;font-family:inherit;font-size:14px;font-weight:bold;line-height:1.3;text-align:center;display:flex;align-items:center;justify-content:center;flex-direction:column;order:2;box-sizing:border-box;position:relative;transition:all .2s ease}
 .xb-auto-btn{background:transparent;color:#ff6b35;border:1.5px solid #ff4a1c}
 .xb-auto-btn::after{content:"\00a0";display:block;font-size:11px;line-height:1.3}
 
@@ -62,11 +61,30 @@ button,input{font-family:inherit}
 .xb-quick-btn{background:#2a3266;color:#fff;border-radius:8px;font-size:15px;font-weight:bold;cursor:pointer;padding:0;border:0;width:100%;height:100%;min-height:36px}
 .xb-quick-btn:active{background:#3a4488}
 
-.xb-place-btn{background:linear-gradient(180deg,#ff8a3d,#ff4a1c);color:#fff;border:0}
+.xb-place-btn{background:linear-gradient(180deg,#ff8a3d,#ff4a1c);color:#fff;border:0;border-radius:12px}
 .xb-place-btn small{font-size:11px;font-weight:normal;opacity:.95;display:block;margin-top:3px;line-height:1.3}
 .xb-place-btn.accepted{background:#8a5a1f;color:#fff}
 .xb-place-btn.cashout{background:#ffb52e;color:#fff;animation:pulseCash 1s infinite}
 @keyframes pulseCash{0%,100%{background:#ffb52e}50%{background:#ff9500}}
+
+/* ===== لودينج الزرار: 3 نقاط ===== */
+.xb-place-btn.loading{pointer-events:none}
+.xb-place-btn.loading .xb-place-text{display:none!important}
+.xb-place-btn.loading .dots-loader{display:flex!important}
+
+/* لودينج الرهان: أحمر */
+.xb-place-btn.loading.bet-load{background:linear-gradient(180deg,#ff5a3d,#c72b0f)!important}
+.xb-place-btn.loading.bet-load .dots-loader span{background:#fff;box-shadow:0 0 8px rgba(255,255,255,.9)}
+
+/* لودينج الجمع (السحب): أصفر */
+.xb-place-btn.loading.cashout-load{background:linear-gradient(180deg,#f5b942,#e09a20)!important}
+.xb-place-btn.loading.cashout-load .dots-loader span{background:#fff;box-shadow:0 0 8px rgba(255,255,255,.9)}
+
+.dots-loader{display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);gap:7px;align-items:center;justify-content:center;z-index:5}
+.dots-loader span{width:11px;height:11px;border-radius:50%;background:#fff;animation:dotPulse 0.6s infinite ease-in-out}
+.dots-loader span:nth-child(2){animation-delay:0.15s}
+.dots-loader span:nth-child(3){animation-delay:0.3s}
+@keyframes dotPulse{0%,80%,100%{transform:scale(0.6);opacity:0.4}40%{transform:scale(1);opacity:1}}
 
 .xb-stats{display:grid;grid-template-columns:repeat(3,1fr);background:linear-gradient(90deg,#ff4a1c,#ff8a3d);padding:12px 8px;margin:8px auto;width:calc(100% - 20px);max-width:1000px;border-radius:6px;text-align:center}
 .xb-stat-label{font-size:11px;color:rgba(255,255,255,.9);margin-bottom:4px}
@@ -83,22 +101,28 @@ button,input{font-family:inherit}
 .xb-history-row .col-bet{color:#fff}
 .xb-history-row .col-win{color:#8b95c9}
 
-/* اللي بيكسب: كله أخضر */
 .xb-history-row.win .col-user,
 .xb-history-row.win .col-fair,
 .xb-history-row.win .col-bet,
 .xb-history-row.win .col-win{color:#2ecc71;font-weight:bold}
-
-/* اللي بيخسر: كله أحمر */
 .xb-history-row.lose .col-user,
 .xb-history-row.lose .col-fair,
 .xb-history-row.lose .col-bet,
 .xb-history-row.lose .col-win{color:#ff5a5a;font-weight:bold}
 
 .xb-history-row.me{background:rgba(60,90,180,.18)}
-.xb-history-row.me.win .col-user{color:#2ecc71;font-weight:bold}
-.xb-history-row.me.lose .col-user{color:#fff}
-.xb-history-row.me.lose .col-bet,.xb-history-row.me.lose .col-fair,.xb-history-row.me.lose .col-win{color:#fff}
+.xb-history-row.me.waiting .col-user,
+.xb-history-row.me.waiting .col-fair,
+.xb-history-row.me.waiting .col-bet,
+.xb-history-row.me.waiting .col-win{color:#fff;font-weight:normal}
+.xb-history-row.me.win .col-user,
+.xb-history-row.me.win .col-fair,
+.xb-history-row.me.win .col-bet,
+.xb-history-row.me.win .col-win{color:#2ecc71;font-weight:bold}
+.xb-history-row.me.lose .col-user,
+.xb-history-row.me.lose .col-fair,
+.xb-history-row.me.lose .col-bet,
+.xb-history-row.me.lose .col-win{color:#ff5a5a;font-weight:bold}
 
 .modal-bg{display:none;position:fixed;inset:0;background:#000c;align-items:center;justify-content:center;padding:20px;z-index:200}
 .modal{width:min(430px,100%);background:#111722;border:1px solid #343d4b;border-radius:14px;padding:20px;max-height:90vh;overflow:auto}
@@ -119,7 +143,7 @@ button,input{font-family:inherit}
 .xb-arena{height:240px}
 .xb-mult{font-size:50px;right:16px;bottom:16px}
 .xb-cd-wrap{right:26px}
-.xb-cd-num{font-size:80px}
+.xb-cd-num{font-size:58px}
 .xb-plane{width:90px;height:72px}
 .xb-auto-btn,.xb-place-btn{font-size:13px;height:70px}
 .xb-place-btn small{font-size:10px}
@@ -131,7 +155,8 @@ button,input{font-family:inherit}
 .xb-history-row{padding:10px 2px}
 .xb-nav-btn{font-size:12px;padding:10px}
 .xb-bonus-btn{font-size:9px;padding:6px 8px}
-.xb-status{font-size:14px;padding:12px 24px}
+.xb-status{font-size:13px;padding:10px 26px;min-width:260px;left:35%;letter-spacing:1px}
+.dots-loader span{width:9px;height:9px}
 }
 </style>
 </head>
@@ -148,7 +173,7 @@ button,input{font-family:inherit}
 </div>
 
 <div class="xb-nav">
-<button class="xb-nav-btn xb-nav-history" onclick="openHistory()">🔔 السجل</button>
+<button class="xb-nav-btn xb-nav-history" onclick="openHistory()">السجل</button>
 <button class="xb-nav-btn xb-nav-terms" onclick="openTerms()">الأحكام و الشروط</button>
 </div>
 
@@ -180,7 +205,10 @@ button,input{font-family:inherit}
 </div>
 </div>
 <div class="xb-bet-row-bottom">
-<button class="xb-place-btn" id="placeBtn1" onclick="placeBet(1)">وضع الرهان<small>(على الجولة التالية)</small></button>
+<button class="xb-place-btn" id="placeBtn1" onclick="placeBet(1)">
+<span class="xb-place-text">وضع الرهان<small>(على الجولة التالية)</small></span>
+<div class="dots-loader"><span></span><span></span><span></span></div>
+</button>
 <div class="xb-quick">
 <button class="xb-quick-btn" onclick="setBet(1,10)">10</button>
 <button class="xb-quick-btn" onclick="setBet(1,50)">50</button>
@@ -201,7 +229,10 @@ button,input{font-family:inherit}
 </div>
 </div>
 <div class="xb-bet-row-bottom">
-<button class="xb-place-btn" id="placeBtn2" onclick="placeBet(2)">وضع الرهان<small>(على الجولة التالية)</small></button>
+<button class="xb-place-btn" id="placeBtn2" onclick="placeBet(2)">
+<span class="xb-place-text">وضع الرهان<small>(على الجولة التالية)</small></span>
+<div class="dots-loader"><span></span><span></span><span></span></div>
+</button>
 <div class="xb-quick">
 <button class="xb-quick-btn" onclick="setBet(2,10)">10</button>
 <button class="xb-quick-btn" onclick="setBet(2,50)">50</button>
@@ -216,17 +247,17 @@ button,input{font-family:inherit}
 <div class="xb-stats">
 <div class="xb-stat-item">
 <div class="xb-stat-label">عدد الرهانات</div>
-<div class="xb-stat-value" id="statCount">23</div>
-<div class="xb-stat-unit">👤 EGP</div>
+<div class="xb-stat-value" id="statCount">0</div>
+<div class="xb-stat-unit">EGP</div>
 </div>
 <div class="xb-stat-item">
 <div class="xb-stat-label">مجموع الرهانات</div>
-<div class="xb-stat-value" id="statTotal">560.71</div>
+<div class="xb-stat-value" id="statTotal">0.00</div>
 <div class="xb-stat-unit">EGP</div>
 </div>
 <div class="xb-stat-item">
 <div class="xb-stat-label">مجموع الربح</div>
-<div class="xb-stat-value" id="statProfit">0</div>
+<div class="xb-stat-value" id="statProfit">0.00</div>
 <div class="xb-stat-unit">EGP</div>
 </div>
 </div>
@@ -328,9 +359,11 @@ let crashPoint=0;
 let depositNumberValue="";
 let bet1={amount:0,active:false};
 let bet2={amount:0,active:false};
-let statCount=23;
-let statTotal=560.71;
+
+let statCount=0;
+let statTotal=0;
 let statProfit=0;
+
 let userHistory=[];
 
 const botIds=["178******","184******","347******","912******","556******","721******","433******","891******","665******","234******","019******","775******","502******","913******","678******","428******","045******","882******","539******","297******","814******","603******","371******","925******","742******","159******","487******","630******","206******","853******"];
@@ -479,15 +512,39 @@ const body=document.getElementById("historyBody");
 const existing=document.querySelector('.xb-history-row.me');
 if(existing) existing.remove();
 const row=document.createElement("div");
-row.className="xb-history-row me "+(isWin?"win":"lose");
-row.innerHTML="<div class='col-user'>"+user+"</div><div class='col-fair'>"+(isWin?"x"+fair.toFixed(2):"x0")+"</div><div class='col-bet'>EGP "+formatNum(betAmt)+"</div><div class='col-win'>EGP "+formatNum(winAmt)+"</div>";
+row.className="xb-history-row me waiting";
+row.innerHTML="<div class='col-user'>"+user+"</div><div class='col-fair'>x0</div><div class='col-bet'>EGP "+formatNum(betAmt)+"</div><div class='col-win'>EGP 0.00</div>";
 body.insertBefore(row, body.firstChild);
 }
 
-function updateStats(newBets, newTotal, newProfit){
-statCount+=newBets;statTotal+=newTotal;statProfit+=newProfit;
+function updateUserRowWin(fair, winAmt){
+const meRow=document.querySelector('.xb-history-row.me');
+if(!meRow) return;
+meRow.classList.remove("waiting","lose");
+meRow.classList.add("win");
+meRow.querySelector(".col-fair").textContent="x"+fair.toFixed(2);
+meRow.querySelector(".col-win").textContent="EGP "+formatNum(winAmt);
+}
+
+function updateUserRowLose(betAmt){
+const meRow=document.querySelector('.xb-history-row.me');
+if(!meRow) return;
+meRow.classList.remove("waiting","win");
+meRow.classList.add("lose");
+meRow.querySelector(".col-fair").textContent="x0";
+meRow.querySelector(".col-bet").textContent="EGP "+formatNum(betAmt);
+meRow.querySelector(".col-win").textContent="EGP 0.00";
+}
+
+function addStatBet(amount){
+statCount++;
+statTotal+=amount;
 document.getElementById("statCount").textContent=statCount;
 document.getElementById("statTotal").textContent=formatNum(statTotal);
+}
+
+function addStatProfit(amount){
+statProfit+=amount;
 document.getElementById("statProfit").textContent=formatNum(statProfit);
 }
 
@@ -556,11 +613,19 @@ clearTrail();
 resizeTrailCanvas();
 
 const b1=document.getElementById("placeBtn1");
-b1.classList.remove("accepted","cashout");
-b1.innerHTML="وضع الرهان<small>(على الجولة التالية)</small>";
+b1.classList.remove("accepted","cashout","loading","bet-load","cashout-load");
+b1.querySelector(".xb-place-text").innerHTML='وضع الرهان<small>(على الجولة التالية)</small>';
 const b2=document.getElementById("placeBtn2");
-b2.classList.remove("accepted","cashout");
-b2.innerHTML="وضع الرهان<small>(على الجولة التالية)</small>";
+b2.classList.remove("accepted","cashout","loading","bet-load","cashout-load");
+b2.querySelector(".xb-place-text").innerHTML='وضع الرهان<small>(على الجولة التالية)</small>';
+
+statCount = 250 + Math.floor(Math.random()*300);
+statTotal = statCount * (20 + Math.random()*80);
+statProfit = 0;
+
+document.getElementById("statCount").textContent=statCount;
+document.getElementById("statTotal").textContent=formatNum(statTotal);
+document.getElementById("statProfit").textContent="0.00";
 
 createPlayers();
 try{await prepareRound();}catch(e){console.error(e);}
@@ -594,8 +659,8 @@ resizeTrailCanvas();
 
 botPlayers.forEach(p=>p.state="playing");
 
-if(bet1.active){const b1=document.getElementById("placeBtn1");b1.classList.remove("accepted");b1.classList.add("cashout");b1.innerHTML="جمع";}
-if(bet2.active){const b2=document.getElementById("placeBtn2");b2.classList.remove("accepted");b2.classList.add("cashout");b2.innerHTML="جمع";}
+if(bet1.active){const b1=document.getElementById("placeBtn1");b1.classList.remove("accepted");b1.classList.add("cashout");b1.querySelector(".xb-place-text").innerHTML="جمع";}
+if(bet2.active){const b2=document.getElementById("placeBtn2");b2.classList.remove("accepted");b2.classList.add("cashout");b2.querySelector(".xb-place-text").innerHTML="جمع";}
 
 try{await update(ref(db,"demoRounds/current"),{status:"running",startedAt:Date.now()});}catch(e){console.error(e);}
 
@@ -676,6 +741,7 @@ if(player.state==="playing" && multiplier>=player.cashout){
 player.state="cashed";
 const winAmt=player.bet*player.cashout;
 updateHistoryRow(player.id, true, player.cashout, winAmt);
+addStatProfit(winAmt);
 }
 });
 },50);
@@ -686,37 +752,32 @@ const betObj=(n===1)?bet1:bet2;
 const btn=document.getElementById("placeBtn"+n);
 
 if(roundState==="running"){
-if(betObj.active && multiplier>1){
-cashOutBet(n);
-return;
-}
+if(betObj.active && multiplier>1){ cashOutBet(n); return; }
 showStatusMsg("أنت داخل الجولة بالفعل","info");
 return;
 }
-
-if(roundState!=="countdown"){
-showStatusMsg("أنت داخل الجولة بالفعل","info");
-return;
-}
-
-if(betObj.active){
-showStatusMsg("أنت داخل الجولة بالفعل","info");
-return;
-}
+if(roundState!=="countdown"){ showStatusMsg("أنت داخل الجولة بالفعل","info"); return; }
+if(betObj.active){ showStatusMsg("أنت داخل الجولة بالفعل","info"); return; }
 
 const amount=Number(document.getElementById("betInput"+n).value)||0;
-if(amount<1){showStatusMsg("أقل رهان 1 ج.م","info");return;}
-if(amount>balance){showStatusMsg("الرصيد غير كافي","info");return;}
+if(amount<1){ showStatusMsg("أقل رهان 1 ج.م","info"); return; }
+if(amount>balance){ showStatusMsg("الرصيد غير كافي","info"); return; }
 
+btn.classList.add("loading","bet-load");
+
+setTimeout(()=>{
 betObj.amount=amount;
 betObj.active=true;
 balance-=amount;
 updateScreenBalance();
+btn.classList.remove("loading","bet-load");
 btn.classList.add("accepted");
-btn.innerHTML="تم قبول الرهان";
+btn.querySelector(".xb-place-text").innerHTML="تم قبول الرهان";
 
-showStatusMsg("تم قبول الرهان!", "accept", 2000);
+addStatBet(amount);
+showStatusMsg("تم قبول الرهان!", "accept", 2400);
 addUserHistoryRow(false, 0, amount, 0);
+}, 600);
 }
 
 function cashOutBet(n){
@@ -724,27 +785,27 @@ const betObj=(n===1)?bet1:bet2;
 const btn=document.getElementById("placeBtn"+n);
 if(!betObj.active)return;
 
+// ===== لودينج الجمع: أصفر (نفس شكل الرهان) =====
+btn.classList.remove("cashout");
+btn.classList.add("loading","cashout-load");
+
+setTimeout(()=>{
 const winAmt=betObj.amount*multiplier;
 balance+=winAmt;
 updateScreenBalance();
 
 betObj.active=false;
-btn.classList.remove("cashout","accepted");
-btn.innerHTML="وضع الرهان<small>(على الجولة التالية)</small>";
+btn.classList.remove("loading","cashout-load","accepted","cashout");
+btn.querySelector(".xb-place-text").innerHTML='وضع الرهان<small>(على الجولة التالية)</small>';
 
 showStatusMsg("لقد فزت: "+winAmt.toFixed(0)+" EGP", "win", 3000);
 
-updateStats(1, betObj.amount, winAmt);
+addStatProfit(winAmt);
 userHistory.unshift({multiplier:multiplier,bet:betObj.amount,win:winAmt,isWin:true,ts:Date.now()});
 
-const meRow=document.querySelector('.xb-history-row.me');
-if(meRow){
-meRow.classList.remove("lose");
-meRow.classList.add("win");
-meRow.querySelector(".col-fair").textContent="x"+multiplier.toFixed(2);
-meRow.querySelector(".col-win").textContent="EGP "+formatNum(winAmt);
-}
+updateUserRowWin(multiplier, winAmt);
 betObj.amount=0;
+}, 500);
 }
 
 async function crash(){
@@ -759,13 +820,9 @@ if(bet1.active){userLost+=bet1.amount;bet1.active=false;}
 if(bet2.active){userLost+=bet2.amount;bet2.active=false;}
 
 if(userLost>0){
-showStatusMsg("سيحالفك الحظ في المرة القادمة", "lose", 2500);
+showStatusMsg("سيحالفك الحظ في المرة القادمة", "lose", 2600);
 userHistory.unshift({multiplier:crashPoint,bet:userLost,win:0,isWin:false,ts:Date.now()});
-const meRow=document.querySelector('.xb-history-row.me');
-if(meRow){
-meRow.querySelector(".col-fair").textContent="x0";
-meRow.querySelector(".col-win").textContent="EGP 0.00";
-}
+updateUserRowLose(userLost);
 }
 
 botPlayers.forEach(player=>{
@@ -780,11 +837,11 @@ await update(ref(db,"demoRounds/current"),{status:"crashed",result:crashPoint,cr
 }catch(e){console.error(e);}
 
 const b1=document.getElementById("placeBtn1");
-b1.classList.remove("cashout","accepted");
-b1.innerHTML="وضع الرهان<small>(على الجولة التالية)</small>";
+b1.classList.remove("cashout","accepted","loading","bet-load","cashout-load");
+b1.querySelector(".xb-place-text").innerHTML='وضع الرهان<small>(على الجولة التالية)</small>';
 const b2=document.getElementById("placeBtn2");
-b2.classList.remove("cashout","accepted");
-b2.innerHTML="وضع الرهان<small>(على الجولة التالية)</small>";
+b2.classList.remove("cashout","accepted","loading","bet-load","cashout-load");
+b2.querySelector(".xb-place-text").innerHTML='وضع الرهان<small>(على الجولة التالية)</small>';
 
 setTimeout(startCountdown, 1200);
 }
