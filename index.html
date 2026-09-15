@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EXBET</title>
+<title>1XBET</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#0b1233;color:#fff;font-family:Tahoma,Arial,sans-serif}
@@ -22,17 +22,68 @@ button,input{font-family:inherit}
 .xb-nav-history{background:linear-gradient(90deg,#ff4a1c,#ff8a3d);color:#fff}
 .xb-nav-terms{background:transparent;color:#ff6b35;border:1px solid #ff4a1c}
 
-.xb-arena{height:280px;margin:8px auto;width:calc(100% - 20px);max-width:1000px;background:linear-gradient(180deg,#1a2050 0%,#141a44 50%,#0f1438 100%);border-radius:6px;position:relative;overflow:hidden}
-.xb-arena::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:100% 30px;pointer-events:none}
-.xb-star{position:absolute;background:#fff;border-radius:50%;box-shadow:0 0 6px #fff;opacity:.85}
-.xb-star.small{width:4px;height:4px}
-.xb-star.big{width:7px;height:7px}
+.xb-arena{
+  height:280px;margin:8px auto;width:calc(100% - 20px);max-width:1000px;
+  border-radius:6px;position:relative;overflow:hidden;
+  background-image: url('https://raw.githubusercontent.com/turbo1-2/my-images/refs/heads/main/Screenshot_%D9%A2%D9%A0%D9%A2%D9%A6%D9%A0%D9%A9%D9%A1%D9%A5-%D9%A1%D9%A8%D9%A5%D9%A8%D9%A4%D9%A9_1xBet.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
-.xb-cd-wrap{position:absolute;right:40px;top:50%;transform:translateY(-50%);display:none;z-index:15}
-.xb-cd-wrap.show{display:block}
-.xb-cd-num{font-size:72px;font-weight:900;color:#fff;font-family:Arial,sans-serif;line-height:1;text-shadow:0 0 20px rgba(255,255,255,.5);text-align:center;letter-spacing:-3px}
+/* ===== حاوية الصور ===== */
+.xb-cd-wrap{
+  position:absolute;
+  right:30px;
+  top:50%;
+  transform:translateY(-50%);
+  display:none;
+  z-index:15;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+}
+.xb-cd-wrap.show{display:flex}
 
-.xb-mult{position:absolute;right:24px;bottom:20px;font-size:64px;font-weight:900;color:#fff;z-index:15;font-family:Arial,sans-serif;direction:ltr;display:none;text-shadow:0 4px 20px rgba(0,0,0,.7);line-height:1}
+.xb-img-box {
+  position: relative;
+  width: 220px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.xb-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.xb-img-box img.active {
+  opacity: 1;
+}
+
+.xb-mult{
+  position:absolute;
+  right:24px;
+  bottom:40px;
+  font-size:64px;
+  font-weight:900;
+  color:#fff;
+  z-index:15;
+  font-family:Arial,sans-serif;
+  direction:ltr;
+  display:none;
+  text-shadow:0 4px 20px rgba(0,0,0,.7);
+  line-height:1;
+}
 
 .xb-status{position:absolute;left:30%;top:50%;transform:translate(-50%,-50%);background:rgba(10,15,40,.55);border:1px solid rgba(46,204,113,.25);color:#fff;padding:12px 44px;border-radius:6px;font-size:16px;font-weight:bold;white-space:nowrap;z-index:30;display:none;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.4);backdrop-filter:blur(3px);letter-spacing:1.5px;min-width:380px}
 .xb-status.show{display:block}
@@ -67,16 +118,13 @@ button,input{font-family:inherit}
 .xb-place-btn.cashout{background:#ffb52e;color:#fff;animation:pulseCash 1s infinite}
 @keyframes pulseCash{0%,100%{background:#ffb52e}50%{background:#ff9500}}
 
-/* ===== لودينج الزرار: 3 نقاط ===== */
 .xb-place-btn.loading{pointer-events:none}
 .xb-place-btn.loading .xb-place-text{display:none!important}
 .xb-place-btn.loading .dots-loader{display:flex!important}
 
-/* لودينج الرهان: أحمر */
 .xb-place-btn.loading.bet-load{background:linear-gradient(180deg,#ff5a3d,#c72b0f)!important}
 .xb-place-btn.loading.bet-load .dots-loader span{background:#fff;box-shadow:0 0 8px rgba(255,255,255,.9)}
 
-/* لودينج الجمع (السحب): أصفر */
 .xb-place-btn.loading.cashout-load{background:linear-gradient(180deg,#f5b942,#e09a20)!important}
 .xb-place-btn.loading.cashout-load .dots-loader span{background:#fff;box-shadow:0 0 8px rgba(255,255,255,.9)}
 
@@ -141,10 +189,10 @@ button,input{font-family:inherit}
 
 @media(max-width:600px){
 .xb-arena{height:240px}
-.xb-mult{font-size:50px;right:16px;bottom:16px}
-.xb-cd-wrap{right:26px}
-.xb-cd-num{font-size:58px}
+.xb-mult{font-size:50px;right:16px;bottom:30px}
+.xb-cd-wrap{right:16px}
 .xb-plane{width:90px;height:72px}
+.xb-img-box { width: 180px; height: 220px; }
 .xb-auto-btn,.xb-place-btn{font-size:13px;height:70px}
 .xb-place-btn small{font-size:10px}
 .xb-amount-box{height:50px}
@@ -178,16 +226,16 @@ button,input{font-family:inherit}
 </div>
 
 <div class="xb-arena">
-<div class="xb-star big" style="top:20%;left:75%"></div>
-<div class="xb-star small" style="top:15%;left:88%"></div>
-<div class="xb-star big" style="top:55%;left:78%"></div>
-<div class="xb-star small" style="top:70%;left:30%"></div>
-<div class="xb-star big" style="top:45%;left:50%"></div>
-<div class="xb-star small" style="top:25%;left:60%"></div>
-<div class="xb-star big" style="top:35%;left:45%"></div>
-
+<!-- ===== حاوية الصور (الصور مخفية في الأول وتتحمل) ===== -->
 <div class="xb-cd-wrap" id="cdWrap">
-<div class="xb-cd-num" id="cdNum">6</div>
+  <div class="xb-img-box" id="imgBox">
+    <img id="introImg0" src="https://raw.githubusercontent.com/turbo1-2/Sss/refs/heads/main/Picsart_26-09-15_20-19-54-801.png" alt="">
+    <img id="introImg1" src="https://raw.githubusercontent.com/turbo1-2/Sss/refs/heads/main/Picsart_26-09-15_20-36-20-090.png" alt="">
+    <img id="introImg2" src="https://raw.githubusercontent.com/turbo1-2/Sss/refs/heads/main/Picsart_26-09-15_20-36-56-591.png" alt="">
+    <img id="introImg3" src="https://raw.githubusercontent.com/turbo1-2/Sss/refs/heads/main/Picsart_26-09-15_20-37-34-314.png" alt="">
+    <img id="introImg4" src="https://raw.githubusercontent.com/turbo1-2/Sss/refs/heads/main/Picsart_26-09-15_20-38-15-780.png" alt="">
+    <img id="introImg5" src="https://raw.githubusercontent.com/turbo1-2/Sss/refs/heads/main/Picsart_26-09-15_20-38-49-784.png" alt="">
+  </div>
 </div>
 
 <div class="xb-status" id="status"></div>
@@ -348,6 +396,28 @@ measurementId:"G-Q6TLZ6GJTV"
 
 const app=initializeApp(firebaseConfig);
 const db=getDatabase(app);
+
+// ====== الصور الستة الجديدة (الطيارة) ======
+const ANIM_IMAGES = [
+"https://raw.githubusercontent.com/turbo1-2/Sss/refs/heads/main/Picsart_26-09-15_20-19-54-801.png",
+"https://raw.githubusercontent.com/turbo1-2/Sss/refs/heads/main/Picsart_26-09-15_20-36-20-090.png",
+"https://raw.githubusercontent.com/turbo1-2/Sss/refs/heads/main/Picsart_26-09-15_20-36-56-591.png",
+"https://raw.githubusercontent.com/turbo1-2/Sss/refs/heads/main/Picsart_26-09-15_20-37-34-314.png",
+"https://raw.githubusercontent.com/turbo1-2/Sss/refs/heads/main/Picsart_26-09-15_20-38-15-780.png",
+"https://raw.githubusercontent.com/turbo1-2/Sss/refs/heads/main/Picsart_26-09-15_20-38-49-784.png"
+];
+
+// ====== Preload: تحميل كل الصور في الأول عشان مفيش تعليق ======
+function preloadImages(){
+  return Promise.all(ANIM_IMAGES.map(src => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => resolve(src);
+      img.onerror = () => resolve(src);
+      img.src = src;
+    });
+  }));
+}
 
 let user="1725389615";
 let balance=1000;
@@ -595,6 +665,38 @@ window.addEventListener("resize",resizeTrailCanvas);
 
 function clearTrail(){trailPoints=[];if(trailCtx){trailCtx.clearRect(0,0,trailCanvas.width,trailCanvas.height);}}
 
+// ====== تشغيل الصور الستة بالتتابع بسلاسة ======
+async function playIntroImages(){
+  const wrap = document.getElementById("cdWrap");
+  const imgs = [
+    document.getElementById("introImg0"),
+    document.getElementById("introImg1"),
+    document.getElementById("introImg2"),
+    document.getElementById("introImg3"),
+    document.getElementById("introImg4"),
+    document.getElementById("introImg5")
+  ];
+  
+  // نحمّل الصور الأول عشان مفيش تعليق
+  await preloadImages();
+  
+  wrap.classList.add("show");
+  
+  for(let i = 0; i < imgs.length; i++){
+    // نشيل الـ active من الكل
+    imgs.forEach(img => img.classList.remove("active"));
+    // نظهر الصورة الحالية بسلاسة
+    imgs[i].classList.add("active");
+    // نستنى 1.5 ثانية عشان نشوف الصورة
+    await new Promise(r => setTimeout(r, 1500));
+  }
+  
+  // نخفي كل الصور
+  imgs.forEach(img => img.classList.remove("active"));
+  await new Promise(r => setTimeout(r, 400));
+  wrap.classList.remove("show");
+}
+
 async function startCountdown(){
 clearInterval(roundTimer);
 clearInterval(countdownTimer);
@@ -607,7 +709,6 @@ hideStatusMsg();
 document.getElementById("planeWrap").style.display="none";
 document.getElementById("planeWrap").style.left="-120px";
 document.getElementById("mult").style.display="none";
-document.getElementById("cdWrap").classList.add("show");
 
 clearTrail();
 resizeTrailCanvas();
@@ -630,18 +731,9 @@ document.getElementById("statProfit").textContent="0.00";
 createPlayers();
 try{await prepareRound();}catch(e){console.error(e);}
 
-let seconds=6;
-document.getElementById("cdNum").textContent=seconds;
-
-countdownTimer=setInterval(()=>{
-seconds--;
-if(seconds>=1){
-document.getElementById("cdNum").textContent=seconds;
-}else{
-clearInterval(countdownTimer);
+// ====== تشغيل الصور بدل العداد ======
+await playIntroImages();
 startRound();
-}
-},1000);
 }
 
 async function startRound(){
@@ -652,7 +744,6 @@ multiplier=1;
 document.getElementById("planeWrap").style.display="block";
 document.getElementById("mult").style.display="block";
 document.getElementById("mult").textContent="1.00x";
-document.getElementById("cdWrap").classList.remove("show");
 
 clearTrail();
 resizeTrailCanvas();
@@ -785,7 +876,6 @@ const betObj=(n===1)?bet1:bet2;
 const btn=document.getElementById("placeBtn"+n);
 if(!betObj.active)return;
 
-// ===== لودينج الجمع: أصفر (نفس شكل الرهان) =====
 btn.classList.remove("cashout");
 btn.classList.add("loading","cashout-load");
 
