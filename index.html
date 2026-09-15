@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>1XBET</title>
+<title>EXBET</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#0b1233;color:#fff;font-family:Tahoma,Arial,sans-serif}
@@ -11,79 +11,29 @@ button,input{font-family:inherit}
 .hidden{display:none!important}
 .app-wrap{background:#0b1233;min-height:100vh;padding-bottom:20px}
 
-.xb-header{height:56px;background:#0d1230;border-bottom:1px solid #232a52;display:flex;align-items:center;justify-content:space-between;padding:0 12px;gap:6px}
-.xb-center{display:flex;align-items:center;gap:8px;margin:0 auto}
-.xb-balance-pill{background:#0a0e26;color:#fff;padding:8px 18px;border-radius:22px;font-size:14px;font-weight:bold;display:flex;align-items:center;justify-content:center;min-width:120px;direction:rtl;border:1px solid #232a52}
-.xb-plus{background:#2ecc71;color:#fff;width:34px;height:34px;border-radius:50%;font-size:20px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;border:0;flex-shrink:0}
-.xb-bonus-btn{background:transparent;color:#f39c12;border:1px solid #f39c12;border-radius:6px;padding:8px 12px;font-size:11px;font-weight:bold;cursor:pointer;flex-shrink:0}
+.xb-header{height:60px;background:#ffffff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;gap:8px;box-shadow:0 2px 8px rgba(0,0,0,.15);position:relative;z-index:50;direction:ltr}
+.xb-bonus-btn{background:transparent;color:#5a6b7a;border:0;font-size:10px;font-weight:bold;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px;position:relative;order:1}
+.xb-bonus-btn .bonus-circle{width:38px;height:38px;border:2px dashed #7a8a99;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;color:#5a6b7a;font-weight:bold;position:relative}
+.xb-bonus-btn .bonus-plus{position:absolute;bottom:-2px;right:-4px;width:16px;height:16px;background:#4a90d9;color:#fff;border-radius:50%;font-size:11px;font-weight:bold;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+.xb-balance-center{display:flex;align-items:center;background:#6b7280;border-radius:22px;padding:4px;gap:0;box-shadow:0 2px 6px rgba(0,0,0,.15);order:2;margin:0 auto}
+.xb-balance-plus{background:#2ecc71;color:#fff;width:48px;height:40px;border-radius:18px;font-size:24px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;border:0;flex-shrink:0}
+.xb-balance-amount{background:#4b5563;color:#fff;padding:0 16px;height:40px;border-radius:18px;font-size:17px;font-weight:900;display:flex;align-items:center;justify-content:center;min-width:90px;direction:rtl}
+.xb-exit-btn{background:transparent;border:0;color:#4a90d9;font-size:26px;cursor:pointer;padding:6px 10px;font-weight:bold;display:flex;align-items:center;justify-content:center;order:3}
 
-.xb-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px 10px;max-width:1000px;margin:0 auto}
+.xb-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px 10px;max-width:1000px;margin:8px auto 0}
 .xb-nav-btn{padding:12px;border-radius:6px;font-size:14px;font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;border:0}
 .xb-nav-history{background:linear-gradient(90deg,#ff4a1c,#ff8a3d);color:#fff}
 .xb-nav-terms{background:transparent;color:#ff6b35;border:1px solid #ff4a1c}
 
-.xb-arena{
-  height:280px;margin:8px auto;width:calc(100% - 20px);max-width:1000px;
-  border-radius:6px;position:relative;overflow:hidden;
-  background-image: url('https://raw.githubusercontent.com/turbo1-2/my-images/refs/heads/main/Screenshot_%D9%A2%D9%A0%D9%A2%D9%A6%D9%A0%D9%A9%D9%A1%D9%A5-%D9%A1%D9%A8%D9%A5%D9%A8%D9%A4%D9%A9_1xBet.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
+.xb-arena{height:280px;margin:8px auto;width:calc(100% - 20px);max-width:1000px;border-radius:6px;position:relative;overflow:hidden;background-image: url('https://raw.githubusercontent.com/turbo1-2/my-images/refs/heads/main/Screenshot_%D9%A2%D9%A0%D9%A2%D9%A6%D9%A0%D9%A9%D9%A1%D9%A5-%D9%A1%D9%A8%D9%A5%D9%A8%D9%A4%D9%A9_1xBet.jpg');background-size: cover;background-position: center;background-repeat: no-repeat}
 
-/* ===== حاوية الصور ===== */
-.xb-cd-wrap{
-  position:absolute;
-  right:30px;
-  top:50%;
-  transform:translateY(-50%);
-  display:none;
-  z-index:15;
-  align-items:center;
-  justify-content:center;
-  gap:5px;
-}
+.xb-cd-wrap{position:absolute;right:30px;top:50%;transform:translateY(-50%);display:none;z-index:15;align-items:center;justify-content:center;gap:5px}
 .xb-cd-wrap.show{display:flex}
+.xb-img-box {position: relative;width: 220px;height: 260px;display: flex;align-items: center;justify-content: center}
+.xb-img-box img {width: 100%;height: 100%;object-fit: contain;display: block;position: absolute;top: 0;left: 0;opacity: 0;transition: opacity 0.4s ease}
+.xb-img-box img.active { opacity: 1 }
 
-.xb-img-box {
-  position: relative;
-  width: 220px;
-  height: 260px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.xb-img-box img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.xb-img-box img.active {
-  opacity: 1;
-}
-
-.xb-mult{
-  position:absolute;
-  right:24px;
-  bottom:40px;
-  font-size:64px;
-  font-weight:900;
-  color:#fff;
-  z-index:15;
-  font-family:Arial,sans-serif;
-  direction:ltr;
-  display:none;
-  text-shadow:0 4px 20px rgba(0,0,0,.7);
-  line-height:1;
-}
+.xb-mult{position:absolute;right:24px;bottom:40px;font-size:64px;font-weight:900;color:#fff;z-index:15;font-family:Arial,sans-serif;direction:ltr;display:none;text-shadow:0 4px 20px rgba(0,0,0,.7);line-height:1}
 
 .xb-status{position:absolute;left:30%;top:50%;transform:translate(-50%,-50%);background:rgba(10,15,40,.55);border:1px solid rgba(46,204,113,.25);color:#fff;padding:12px 44px;border-radius:6px;font-size:16px;font-weight:bold;white-space:nowrap;z-index:30;display:none;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.4);backdrop-filter:blur(3px);letter-spacing:1.5px;min-width:380px}
 .xb-status.show{display:block}
@@ -95,6 +45,15 @@ button,input{font-family:inherit}
 
 .xb-plane{position:absolute;left:-120px;bottom:40px;width:110px;height:85px;z-index:20;object-fit:contain;background:transparent;filter:drop-shadow(0 0 8px #ffb52e) drop-shadow(0 0 18px #ff8a00);display:none;transform-origin:center center;pointer-events:none}
 .xb-trail{position:absolute;left:0;top:0;width:100%;height:100%;z-index:5;pointer-events:none;overflow:visible}
+
+/* ===== صورة الانفجار (بتظهر وتختفي على طول) ===== */
+.xb-crash-img {
+  position: absolute;width: 200px;height: 200px;object-fit: contain;
+  z-index: 25;pointer-events: none;opacity: 0;
+  transform: translate(-50%, 50%);
+  filter: drop-shadow(0 0 15px #ff4a1c) drop-shadow(0 0 30px #ffb52e);
+}
+.xb-crash-img.active { opacity: 1 }
 
 .xb-bet-box{background:#1e2551;border-radius:10px;padding:12px;margin:10px auto;width:calc(100% - 20px);max-width:1000px;border:1px solid #2a3266}
 .xb-bet-row-top{display:flex;gap:8px;margin-bottom:8px;align-items:stretch}
@@ -192,7 +151,8 @@ button,input{font-family:inherit}
 .xb-mult{font-size:50px;right:16px;bottom:30px}
 .xb-cd-wrap{right:16px}
 .xb-plane{width:90px;height:72px}
-.xb-img-box { width: 180px; height: 220px; }
+.xb-crash-img{width:150px;height:150px}
+.xb-img-box { width: 180px; height: 220px }
 .xb-auto-btn,.xb-place-btn{font-size:13px;height:70px}
 .xb-place-btn small{font-size:10px}
 .xb-amount-box{height:50px}
@@ -202,9 +162,12 @@ button,input{font-family:inherit}
 .xb-history-row,.xb-history-head{font-size:11px}
 .xb-history-row{padding:10px 2px}
 .xb-nav-btn{font-size:12px;padding:10px}
-.xb-bonus-btn{font-size:9px;padding:6px 8px}
 .xb-status{font-size:13px;padding:10px 26px;min-width:260px;left:35%;letter-spacing:1px}
 .dots-loader span{width:9px;height:9px}
+.xb-bonus-btn .bonus-circle{width:34px;height:34px;font-size:8px}
+.xb-balance-plus{width:44px;height:36px;font-size:20px}
+.xb-balance-amount{height:36px;font-size:15px;padding:0 12px;min-width:80px}
+.xb-exit-btn{font-size:22px}
 }
 </style>
 </head>
@@ -212,12 +175,14 @@ button,input{font-family:inherit}
 <div id="app" class="app-wrap">
 
 <div class="xb-header">
-<div style="width:60px"></div>
-<div class="xb-center">
-<button class="xb-plus" onclick="openDeposit()">+</button>
-<div class="xb-balance-pill"><span id="balance">0.00</span> ج.م</div>
-</div>
-<button class="xb-bonus-btn">BONUS+</button>
+  <button class="xb-bonus-btn" onclick="showStatusMsg('BONUS قريباً','info',2000)">
+    <div class="bonus-circle">BONUS<div class="bonus-plus">+</div></div>
+  </button>
+  <div class="xb-balance-center">
+    <button class="xb-balance-plus" onclick="openDeposit()">+</button>
+    <div class="xb-balance-amount"><span id="balance">0.00</span> ج.م</div>
+  </div>
+  <button class="xb-exit-btn" onclick="showStatusMsg('خروج','info',2000)">➜</button>
 </div>
 
 <div class="xb-nav">
@@ -226,7 +191,6 @@ button,input{font-family:inherit}
 </div>
 
 <div class="xb-arena">
-<!-- ===== حاوية الصور (الصور مخفية في الأول وتتحمل) ===== -->
 <div class="xb-cd-wrap" id="cdWrap">
   <div class="xb-img-box" id="imgBox">
     <img id="introImg0" src="https://raw.githubusercontent.com/turbo1-2/Sss/refs/heads/main/Picsart_26-09-15_20-19-54-801.png" alt="">
@@ -242,6 +206,7 @@ button,input{font-family:inherit}
 <div class="xb-mult" id="mult">1.00x</div>
 <canvas class="xb-trail" id="trailCanvas"></canvas>
 <img class="xb-plane" id="planeWrap" src="https://raw.githubusercontent.com/turbo1-2/my-images/refs/heads/main/file_00000000e84881f4ae05c0fdf3f58f1b.png" alt="plane" crossorigin="anonymous">
+<img class="xb-crash-img" id="crashImg0" src="https://raw.githubusercontent.com/turbo1-2/my-images/refs/heads/main/Photoroom-%D9%A2%D9%A0%D9%A2%D9%A6%D9%A0%D9%A9%D9%A1%D9%A5_%D9%A1%D9%A9%D9%A2%D9%A1%D9%A2%D9%A3.png" alt="">
 </div>
 
 <div class="xb-bet-box">
@@ -293,30 +258,13 @@ button,input{font-family:inherit}
 </div>
 
 <div class="xb-stats">
-<div class="xb-stat-item">
-<div class="xb-stat-label">عدد الرهانات</div>
-<div class="xb-stat-value" id="statCount">0</div>
-<div class="xb-stat-unit">EGP</div>
-</div>
-<div class="xb-stat-item">
-<div class="xb-stat-label">مجموع الرهانات</div>
-<div class="xb-stat-value" id="statTotal">0.00</div>
-<div class="xb-stat-unit">EGP</div>
-</div>
-<div class="xb-stat-item">
-<div class="xb-stat-label">مجموع الربح</div>
-<div class="xb-stat-value" id="statProfit">0.00</div>
-<div class="xb-stat-unit">EGP</div>
-</div>
+<div class="xb-stat-item"><div class="xb-stat-label">عدد الرهانات</div><div class="xb-stat-value" id="statCount">0</div><div class="xb-stat-unit">EGP</div></div>
+<div class="xb-stat-item"><div class="xb-stat-label">مجموع الرهانات</div><div class="xb-stat-value" id="statTotal">0.00</div><div class="xb-stat-unit">EGP</div></div>
+<div class="xb-stat-item"><div class="xb-stat-label">مجموع الربح</div><div class="xb-stat-value" id="statProfit">0.00</div><div class="xb-stat-unit">EGP</div></div>
 </div>
 
 <div class="xb-history">
-<div class="xb-history-head">
-<div>اسم المستخدم</div>
-<div>الفرص</div>
-<div>الرهان</div>
-<div>الأرباح</div>
-</div>
+<div class="xb-history-head"><div>اسم المستخدم</div><div>الفرص</div><div>الرهان</div><div>الأرباح</div></div>
 <div id="historyBody"></div>
 </div>
 
@@ -334,11 +282,7 @@ button,input{font-family:inherit}
 </div>
 <input id="depositAmount" type="number" min="1" placeholder="المبلغ (الحد الأدنى 150 EGP)">
 <input id="fromNumber" type="tel" inputmode="numeric" maxlength="11" placeholder="رقم هاتفك الذي تم منه التحويل">
-<div class="file-box">
-من فضلك قم بتحميل لقطة شاشة للرسالة النصية :
-<input id="depositImage" type="file" accept="image/*" onchange="previewDepositImage(event)">
-<img id="depositPreview" class="preview">
-</div>
+<div class="file-box">من فضلك قم بتحميل لقطة شاشة للرسالة النصية :<input id="depositImage" type="file" accept="image/*" onchange="previewDepositImage(event)"><img id="depositPreview" class="preview"></div>
 <button id="depositBtn" class="main" style="background:#ff8a00;color:#111;font-weight:bold;padding:13px;border:0;border-radius:8px;width:100%;cursor:pointer" onclick="sendDeposit()">إرسال طلب الإيداع</button>
 </div>
 </div>
@@ -397,7 +341,6 @@ measurementId:"G-Q6TLZ6GJTV"
 const app=initializeApp(firebaseConfig);
 const db=getDatabase(app);
 
-// ====== الصور الستة الجديدة (الطيارة) ======
 const ANIM_IMAGES = [
 "https://raw.githubusercontent.com/turbo1-2/Sss/refs/heads/main/Picsart_26-09-15_20-19-54-801.png",
 "https://raw.githubusercontent.com/turbo1-2/Sss/refs/heads/main/Picsart_26-09-15_20-36-20-090.png",
@@ -407,9 +350,13 @@ const ANIM_IMAGES = [
 "https://raw.githubusercontent.com/turbo1-2/Sss/refs/heads/main/Picsart_26-09-15_20-38-49-784.png"
 ];
 
-// ====== Preload: تحميل كل الصور في الأول عشان مفيش تعليق ======
+const CRASH_IMAGES = [
+"https://raw.githubusercontent.com/turbo1-2/my-images/refs/heads/main/Photoroom-%D9%A2%D9%A0%D9%A2%D9%A6%D9%A0%D9%A9%D9%A1%D9%A5_%D9%A1%D9%A9%D9%A2%D9%A1%D9%A2%D9%A3.png"
+];
+
 function preloadImages(){
-  return Promise.all(ANIM_IMAGES.map(src => {
+  const allImages = ANIM_IMAGES.concat(CRASH_IMAGES);
+  return Promise.all(allImages.map(src => {
     return new Promise((resolve) => {
       const img = new Image();
       img.onload = () => resolve(src);
@@ -429,11 +376,9 @@ let crashPoint=0;
 let depositNumberValue="";
 let bet1={amount:0,active:false};
 let bet2={amount:0,active:false};
-
 let statCount=0;
 let statTotal=0;
 let statProfit=0;
-
 let userHistory=[];
 
 const botIds=["178******","184******","347******","912******","556******","721******","433******","891******","665******","234******","019******","775******","502******","913******","678******","428******","045******","882******","539******","297******","814******","603******","371******","925******","742******","159******","487******","630******","206******","853******"];
@@ -446,17 +391,13 @@ if(!el) return;
 clearTimeout(statusTimeout);
 el.textContent=text;
 el.className="xb-status show "+(cls||"");
-statusTimeout=setTimeout(()=>{
-el.className="xb-status";
-},duration||2200);
+statusTimeout=setTimeout(()=>{ el.className="xb-status"; },duration||2200);
 }
-
 function hideStatusMsg(){
 const el=document.getElementById("status");
 if(el) el.className="xb-status";
 clearTimeout(statusTimeout);
 }
-
 function updateScreenBalance(){
 const b=document.getElementById("balance");
 const wb=document.getElementById("withdrawBalance");
@@ -464,7 +405,6 @@ const formatted=Number(balance||0).toFixed(2);
 if(b) b.textContent=formatted;
 if(wb) wb.textContent=formatted;
 }
-
 onValue(ref(db,"settings/depositNumber"),snap=>{
 depositNumberValue=snap.exists()?String(snap.val()||""):"لم يتم تحديد الرقم";
 const el=document.getElementById("depositNumber");
@@ -481,7 +421,6 @@ const reader=new FileReader();
 reader.onload=()=>{preview.src=reader.result;preview.style.display="block";};
 reader.readAsDataURL(file);
 }
-
 function fileToBase64(file){
 return new Promise((resolve,reject)=>{
 const reader=new FileReader();
@@ -490,7 +429,6 @@ reader.onerror=reject;
 reader.readAsDataURL(file);
 });
 }
-
 async function sendDeposit(){
 const amount=Number(document.getElementById("depositAmount").value);
 const from=document.getElementById("fromNumber").value.replace(/\D/g,"");
@@ -514,7 +452,6 @@ closeModal("depositModal");
 }catch(error){console.error(error);}
 btn.disabled=false;btn.classList.remove("loading");
 }
-
 async function sendWithdraw(){
 const amount=Number(document.getElementById("withdrawAmount").value);
 const number=document.getElementById("withdrawNumber").value.replace(/\D/g,"");
@@ -531,7 +468,6 @@ closeModal("withdrawModal");
 }catch(error){console.error(error);}
 btn.disabled=false;btn.classList.remove("loading");
 }
-
 function openDeposit(){document.getElementById("depositModal").style.display="flex";}
 function openWithdraw(){document.getElementById("withdrawBalance").textContent=Number(balance||0).toFixed(2);document.getElementById("withdrawModal").style.display="flex";}
 function openHistory(){
@@ -561,22 +497,13 @@ row.innerHTML="<div class='col-user'>"+p.name+"</div><div class='col-fair'>x0</d
 body.appendChild(row);
 });
 }
-
 function updateHistoryRow(pid, isWin, fair, winAmt){
 const row=document.querySelector('.xb-history-row[data-pid="'+pid+'"]');
 if(!row) return;
 row.classList.remove("win","lose");
-if(isWin){
-row.classList.add("win");
-row.querySelector(".col-fair").textContent="x"+fair.toFixed(2);
-row.querySelector(".col-win").textContent="EGP "+formatNum(winAmt);
-}else{
-row.classList.add("lose");
-row.querySelector(".col-fair").textContent="x0";
-row.querySelector(".col-win").textContent="EGP 0.00";
+if(isWin){row.classList.add("win");row.querySelector(".col-fair").textContent="x"+fair.toFixed(2);row.querySelector(".col-win").textContent="EGP "+formatNum(winAmt);}
+else{row.classList.add("lose");row.querySelector(".col-fair").textContent="x0";row.querySelector(".col-win").textContent="EGP 0.00";}
 }
-}
-
 function addUserHistoryRow(isWin, fair, betAmt, winAmt){
 const body=document.getElementById("historyBody");
 const existing=document.querySelector('.xb-history-row.me');
@@ -586,37 +513,23 @@ row.className="xb-history-row me waiting";
 row.innerHTML="<div class='col-user'>"+user+"</div><div class='col-fair'>x0</div><div class='col-bet'>EGP "+formatNum(betAmt)+"</div><div class='col-win'>EGP 0.00</div>";
 body.insertBefore(row, body.firstChild);
 }
-
 function updateUserRowWin(fair, winAmt){
 const meRow=document.querySelector('.xb-history-row.me');
 if(!meRow) return;
-meRow.classList.remove("waiting","lose");
-meRow.classList.add("win");
+meRow.classList.remove("waiting","lose");meRow.classList.add("win");
 meRow.querySelector(".col-fair").textContent="x"+fair.toFixed(2);
 meRow.querySelector(".col-win").textContent="EGP "+formatNum(winAmt);
 }
-
 function updateUserRowLose(betAmt){
 const meRow=document.querySelector('.xb-history-row.me');
 if(!meRow) return;
-meRow.classList.remove("waiting","win");
-meRow.classList.add("lose");
+meRow.classList.remove("waiting","win");meRow.classList.add("lose");
 meRow.querySelector(".col-fair").textContent="x0";
 meRow.querySelector(".col-bet").textContent="EGP "+formatNum(betAmt);
 meRow.querySelector(".col-win").textContent="EGP 0.00";
 }
-
-function addStatBet(amount){
-statCount++;
-statTotal+=amount;
-document.getElementById("statCount").textContent=statCount;
-document.getElementById("statTotal").textContent=formatNum(statTotal);
-}
-
-function addStatProfit(amount){
-statProfit+=amount;
-document.getElementById("statProfit").textContent=formatNum(statProfit);
-}
+function addStatBet(amount){statCount++;statTotal+=amount;document.getElementById("statCount").textContent=statCount;document.getElementById("statTotal").textContent=formatNum(statTotal);}
+function addStatProfit(amount){statProfit+=amount;document.getElementById("statProfit").textContent=formatNum(statProfit);}
 
 function createPlayers(){
 botPlayers=[];
@@ -633,7 +546,6 @@ botPlayers.push({id:"p"+Date.now()+"_"+idx,name:name,cashout:cashout,bet:betAmou
 });
 createHistoryRows(botPlayers);
 }
-
 function generateCrashPoint(){
 const presets=[1.06,1.15,1.25,1.48,1.72,2.05,2.35,2.80,3.20,3.75,4.50,5.00,5.80,6.50,7.20,8.00,9.50,11.00,12.00,13.50];
 let point=presets[Math.floor(Math.random()*presets.length)];
@@ -641,7 +553,6 @@ if(Math.random()<0.30){point+=Number((Math.random()*.5).toFixed(2));}
 if(Math.random()<0.10){point=Number((10+Math.random()*8).toFixed(2));}
 return Number(point.toFixed(2));
 }
-
 async function prepareRound(){
 const newRoundId=String(Date.now());
 const newCrashPoint=generateCrashPoint();
@@ -662,37 +573,23 @@ trailCanvas.width=arena.clientWidth;
 trailCanvas.height=arena.clientHeight;
 }
 window.addEventListener("resize",resizeTrailCanvas);
-
 function clearTrail(){trailPoints=[];if(trailCtx){trailCtx.clearRect(0,0,trailCanvas.width,trailCanvas.height);}}
 
-// ====== تشغيل الصور الستة بالتتابع بسلاسة ======
 async function playIntroImages(){
   const wrap = document.getElementById("cdWrap");
-  const imgs = [
-    document.getElementById("introImg0"),
-    document.getElementById("introImg1"),
-    document.getElementById("introImg2"),
-    document.getElementById("introImg3"),
-    document.getElementById("introImg4"),
-    document.getElementById("introImg5")
+  const introImgs = [
+    document.getElementById("introImg0"),document.getElementById("introImg1"),
+    document.getElementById("introImg2"),document.getElementById("introImg3"),
+    document.getElementById("introImg4"),document.getElementById("introImg5")
   ];
-  
-  // نحمّل الصور الأول عشان مفيش تعليق
   await preloadImages();
-  
   wrap.classList.add("show");
-  
-  for(let i = 0; i < imgs.length; i++){
-    // نشيل الـ active من الكل
-    imgs.forEach(img => img.classList.remove("active"));
-    // نظهر الصورة الحالية بسلاسة
-    imgs[i].classList.add("active");
-    // نستنى 1.5 ثانية عشان نشوف الصورة
+  for(let i = 0; i < introImgs.length; i++){
+    introImgs.forEach(img => img.classList.remove("active"));
+    introImgs[i].classList.add("active");
     await new Promise(r => setTimeout(r, 1500));
   }
-  
-  // نخفي كل الصور
-  imgs.forEach(img => img.classList.remove("active"));
+  introImgs.forEach(img => img.classList.remove("active"));
   await new Promise(r => setTimeout(r, 400));
   wrap.classList.remove("show");
 }
@@ -709,6 +606,7 @@ hideStatusMsg();
 document.getElementById("planeWrap").style.display="none";
 document.getElementById("planeWrap").style.left="-120px";
 document.getElementById("mult").style.display="none";
+document.getElementById("crashImg0").classList.remove("active");
 
 clearTrail();
 resizeTrailCanvas();
@@ -723,15 +621,12 @@ b2.querySelector(".xb-place-text").innerHTML='وضع الرهان<small>(على 
 statCount = 250 + Math.floor(Math.random()*300);
 statTotal = statCount * (20 + Math.random()*80);
 statProfit = 0;
-
 document.getElementById("statCount").textContent=statCount;
 document.getElementById("statTotal").textContent=formatNum(statTotal);
 document.getElementById("statProfit").textContent="0.00";
 
 createPlayers();
 try{await prepareRound();}catch(e){console.error(e);}
-
-// ====== تشغيل الصور بدل العداد ======
 await playIntroImages();
 startRound();
 }
@@ -782,12 +677,10 @@ if(y > endY) y = endY;
 const plane = document.getElementById("planeWrap");
 plane.style.left = x + "px";
 plane.style.bottom = y + "px";
+// مفيش دوران - الطيارة ثابتة الشكل
 
-const angle = -10 + (Math.min(1, elapsed / 16) * 30);
-plane.style.transform = "rotate(" + angle + "deg)";
-
-trailPoints.push({x: x + 18, y: y + 30});
-if(trailPoints.length > 800) trailPoints.shift();
+// الخط الأصفر من ديل الطيارة (نقطة قريبة جداً من ديل الطيارة)
+trailPoints.push({x: x + 25, y: y + 30});
 
 trailCtx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
 
@@ -824,7 +717,6 @@ document.getElementById("mult").textContent = multiplier.toFixed(2) + "x";
 crash();
 return;
 }
-
 document.getElementById("mult").textContent = multiplier.toFixed(2) + "x";
 
 botPlayers.forEach(player=>{
@@ -841,21 +733,16 @@ addStatProfit(winAmt);
 function placeBet(n){
 const betObj=(n===1)?bet1:bet2;
 const btn=document.getElementById("placeBtn"+n);
-
 if(roundState==="running"){
 if(betObj.active && multiplier>1){ cashOutBet(n); return; }
-showStatusMsg("أنت داخل الجولة بالفعل","info");
-return;
+showStatusMsg("أنت داخل الجولة بالفعل","info");return;
 }
 if(roundState!=="countdown"){ showStatusMsg("أنت داخل الجولة بالفعل","info"); return; }
 if(betObj.active){ showStatusMsg("أنت داخل الجولة بالفعل","info"); return; }
-
 const amount=Number(document.getElementById("betInput"+n).value)||0;
 if(amount<1){ showStatusMsg("أقل رهان 1 ج.م","info"); return; }
 if(amount>balance){ showStatusMsg("الرصيد غير كافي","info"); return; }
-
 btn.classList.add("loading","bet-load");
-
 setTimeout(()=>{
 betObj.amount=amount;
 betObj.active=true;
@@ -864,7 +751,6 @@ updateScreenBalance();
 btn.classList.remove("loading","bet-load");
 btn.classList.add("accepted");
 btn.querySelector(".xb-place-text").innerHTML="تم قبول الرهان";
-
 addStatBet(amount);
 showStatusMsg("تم قبول الرهان!", "accept", 2400);
 addUserHistoryRow(false, 0, amount, 0);
@@ -875,24 +761,18 @@ function cashOutBet(n){
 const betObj=(n===1)?bet1:bet2;
 const btn=document.getElementById("placeBtn"+n);
 if(!betObj.active)return;
-
 btn.classList.remove("cashout");
 btn.classList.add("loading","cashout-load");
-
 setTimeout(()=>{
 const winAmt=betObj.amount*multiplier;
 balance+=winAmt;
 updateScreenBalance();
-
 betObj.active=false;
 btn.classList.remove("loading","cashout-load","accepted","cashout");
 btn.querySelector(".xb-place-text").innerHTML='وضع الرهان<small>(على الجولة التالية)</small>';
-
 showStatusMsg("لقد فزت: "+winAmt.toFixed(0)+" EGP", "win", 3000);
-
 addStatProfit(winAmt);
 userHistory.unshift({multiplier:multiplier,bet:betObj.amount,win:winAmt,isWin:true,ts:Date.now()});
-
 updateUserRowWin(multiplier, winAmt);
 betObj.amount=0;
 }, 500);
@@ -903,7 +783,17 @@ clearInterval(roundTimer);
 roundState="crashed";
 multiplier=crashPoint;
 document.getElementById("mult").textContent=crashPoint.toFixed(2)+"x";
-document.getElementById("planeWrap").style.display="none";
+
+const planeEl = document.getElementById("planeWrap");
+const planeX = parseFloat(planeEl.style.left) || 20;
+const planeY = parseFloat(planeEl.style.bottom) || 40;
+planeEl.style.display="none";
+
+// الانفجار يظهر في نفس مكان الطيارة (بدل ما كانت واقفة)
+const crashImg = document.getElementById("crashImg0");
+crashImg.style.left = (planeX + 55) + "px";
+crashImg.style.bottom = (planeY + 20) + "px";
+crashImg.classList.add("active");
 
 let userLost=0;
 if(bet1.active){userLost+=bet1.amount;bet1.active=false;}
@@ -933,7 +823,11 @@ const b2=document.getElementById("placeBtn2");
 b2.classList.remove("cashout","accepted","loading","bet-load","cashout-load");
 b2.querySelector(".xb-place-text").innerHTML='وضع الرهان<small>(على الجولة التالية)</small>';
 
-setTimeout(startCountdown, 1200);
+// نخفي الانفجار بسرعة (300 مللي) وبعدها الجولة الجديدة على طول
+setTimeout(() => {
+  crashImg.classList.remove("active");
+  startCountdown();
+}, 300);
 }
 
 window.openDeposit=openDeposit;
