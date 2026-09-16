@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EXBET</title>
+<title>1xBet</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#0b1233;color:#fff;font-family:Tahoma,Arial,sans-serif}
@@ -552,13 +552,98 @@ botPlayers.push({id:"p"+Date.now()+"_"+idx,name:name,cashout:cashout,bet:betAmou
 });
 createHistoryRows(botPlayers);
 }
-function generateCrashPoint(){
-const presets=[1.06,1.15,1.25,1.48,1.72,2.05,2.35,2.80,3.20,3.75,4.50,5.00,5.80,6.50,7.20,8.00,9.50,11.00,12.00,13.50];
-let point=presets[Math.floor(Math.random()*presets.length)];
-if(Math.random()<0.30){point+=Number((Math.random()*.5).toFixed(2));}
-if(Math.random()<0.10){point=Number((10+Math.random()*8).toFixed(2));}
-return Number(point.toFixed(2));
+
+/* ============================================================
+   مولّد التوقعات التلقائي — عشوائي بدون تكرار قريب (زي 1xBet)
+   التوزيع الجديد:
+   - الأكثر شيوعاً: 5x – 15x
+   - النادر: 15x – 20x
+   - الأندر: 20x – 30x (أقصى حد ثابت 30)
+   ============================================================ */
+
+let crashHistory = [];          // آخر النتائج بالترتيب (الأحدث أولاً)
+const HISTORY_SIZE = 15;        // ممنوع تكرار أي نتيجة ظهرت في آخر 15 جولة
+const MIN_DIFF = 0.07;          // أقل فرق مسموح بين أي نتيجتين قريبتين
+const MAX_CRASH = 30;           // أقصى قيمة ممكنة (لا تتعدى 30 أبداً)
+
+// توزيع الاحتمالات حسب الطلب
+const CRASH_BUCKETS = [
+  {min:1.01, max:2.00, weight:15},   // صغيرة جداً
+  {min:2.00, max:5.00, weight:22},   // متوسطة صغيرة
+  {min:5.00, max:15.00, weight:45},  // ✅ الأكثر شيوعاً (5x – 15x)
+  {min:15.00, max:20.00, weight:10}, // نادراً
+  {min:20.00, max:25.00, weight:5},  // أندر
+  {min:25.00, max:30.00, weight:3}   // أندر (أقصى حد 30)
+];
+
+// اختيار قيمة من داخل الـ bucket مع ميل للأرقام الصغيرة
+function pickFromBuckets(){
+  const total = CRASH_BUCKETS.reduce((s,b)=>s+b.weight,0);
+  let r = Math.random()*total;
+  for(const b of CRASH_BUCKETS){
+    if(r < b.weight){
+      const t = Math.pow(Math.random(), 1.6); // ميل للطرف الصغير
+      return b.min + (b.max - b.min) * t;
+    }
+    r -= b.weight;
+  }
+  return 1.05;
 }
+
+// تقريب احترافي
+function roundPoint(v){
+  return Number(v.toFixed(2));
+}
+
+// مسافة الأمان: النتائج الكبيرة مسموح فيها تقارب أقل
+function safeGap(prev){
+  if(prev > 15) return 0.5;
+  if(prev > 5)  return 0.15;
+  return MIN_DIFF;
+}
+
+function generateCrashPoint(){
+  let point = 1.05;
+  let ok = false;
+
+  for(let attempt = 0; attempt < 80 && !ok; attempt++){
+    point = roundPoint(pickFromBuckets());
+    if(point < 1.01) point = 1.01;
+    if(point > MAX_CRASH) point = MAX_CRASH;  // ✅ لا يتعدى 30 أبداً
+
+    let conflict = false;
+    for(let i = 0; i < crashHistory.length; i++){
+      const prev = crashHistory[i];
+      if(Math.abs(point - prev) < safeGap(prev)){
+        conflict = true;
+        break;
+      }
+    }
+    if(!conflict) ok = true;
+  }
+
+  // لو فشل كل المحاولات (حالة نادرة جداً) نبعد النتيجة يدوياً عن آخر نتيجة
+  if(!ok){
+    const last = crashHistory[0] || 1.05;
+    let offset = 0.37 + Math.random() * 0.9;
+    if(Math.random() < 0.5) offset = -offset;
+    point = roundPoint(Math.max(1.01, last + offset));
+    if(point > MAX_CRASH) point = roundPoint(MAX_CRASH - Math.random()*3);
+    if(Math.abs(point - last) < MIN_DIFF) {
+      point = roundPoint(last + 1.13);
+      if(point > MAX_CRASH) point = roundPoint(MAX_CRASH - Math.random()*2);
+    }
+  }
+
+  // تسجيل النتيجة في الذاكرة
+  crashHistory.unshift(point);
+  if(crashHistory.length > HISTORY_SIZE) crashHistory.pop();
+
+  return point;
+}
+
+/* ============================================================ */
+
 async function prepareRound(){
 const newRoundId=String(Date.now());
 const newCrashPoint=generateCrashPoint();
@@ -876,4 +961,4 @@ document.addEventListener("dragover",function(e){e.preventDefault();return false
 })();
 </script>
 </body>
-  </html>
+      </html>
